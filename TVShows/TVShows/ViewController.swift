@@ -9,17 +9,36 @@
 import UIKit
 
 class ViewController: UIViewController {
-
+    
+    
+    
+    
+    @IBOutlet weak var textField: UITextField!
+    
+    @IBOutlet weak var textBox: UITextView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    @IBAction func buttonTapAction(_ sender: Any) {
+        //print("TAP")
+        textField.text = "Gumb je kliknut"
     }
-
-
+    
+    @IBAction func buttonTapAction2(_ sender: Any) {
+        if((textField.text?.count)! > 20){
+            textBox.text = textBox.text + " " + textField.text!
+            textField.text = ""
+        } else {
+            textField.text = ""
+        }
+    }
+    
+    @IBAction func buttonRestart(_ sender: Any) {
+        if(!(textBox.text.isEmpty)){
+            textBox.text = ""
+        }
+    }
 }
 
