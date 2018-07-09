@@ -26,20 +26,24 @@ class LoginViewController: UIViewController {
     }
     
     @IBAction func buttonAction(_ sender: Any) {
-        if(!selected){
+//        if(!selected){
             updateLabel()
             activityIndicator.hidesWhenStopped = true
             activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.gray
             activityIndicator.startAnimating()
             button.alpha = 0.5
+            button.isEnabled = false
             selected = true
-        } else {
-            updateLabel()
-            activityIndicator.stopAnimating()
-            button.alpha = 1.0
-            selected = false
+//        } else {
+//
+//        }
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 4) {
+            self.updateLabel()
+            self.activityIndicator.stopAnimating()
+            self.button.alpha = 1.0
+            self.selected = false
+            self.button.isEnabled = true
         }
-        
     }
     
     func updateLabel() {
