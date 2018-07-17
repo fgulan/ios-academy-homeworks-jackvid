@@ -2,58 +2,37 @@
 //  LoginViewController.swift
 //  TVShows
 //
-//  Created by Infinum Student Academy on 07/07/2018.
+//  Created by Infinum Student Academy on 11/07/2018.
 //  Copyright © 2018 Jakov Vidak. All rights reserved.
 //
 
 import UIKit
-//importaj pods
+import SVProgressHUD
 
 class LoginViewController: UIViewController {
+    
+    //MARK: - Private -
 
-    @IBOutlet weak var label: UILabel!
-    @IBOutlet weak var button: UIButton!
-    var numberOfTaps = 0;
-    var selected = false;
-    
-    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        button.isEnabled = false
-        activityIndicator.startAnimating()
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 3) {
-            self.activityIndicator.stopAnimating()
-            self.button.isEnabled = true
-        }
+
+        // Do any additional setup after loading the view.
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func buttonAction(_ sender: Any) {
-        if(!selected){
-            updateLabel()
-            activityIndicator.hidesWhenStopped = true
-            activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.gray
-            activityIndicator.startAnimating()
-            button.alpha = 0.5
-            selected = true
-        } else {
-            updateLabel()
-            activityIndicator.stopAnimating()
-            button.alpha = 1.0
-            selected = false
-            button.isEnabled = true
-            
-        }
-        
+
+    /*
+    // MARK: - Navigation
+
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // Get the new view controller using segue.destinationViewController.
+        // Pass the selected object to the new view controller.
     }
-    
-    func updateLabel() {
-        numberOfTaps += 1
-        label.text = "Number of taps: \(numberOfTaps)"
-    }
+    */
 
 }
