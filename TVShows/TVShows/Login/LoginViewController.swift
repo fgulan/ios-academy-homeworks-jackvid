@@ -2,58 +2,57 @@
 //  LoginViewController.swift
 //  TVShows
 //
-//  Created by Infinum Student Academy on 07/07/2018.
+//  Created by Infinum Student Academy on 11/07/2018.
 //  Copyright © 2018 Jakov Vidak. All rights reserved.
 //
 
 import UIKit
-//importaj pods
+import SVProgressHUD
 
 class LoginViewController: UIViewController {
-
-    @IBOutlet weak var label: UILabel!
-    @IBOutlet weak var button: UIButton!
-    var numberOfTaps = 0;
-    var selected = false;
     
-    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    //MARK: - Private -
+    @IBOutlet private weak var rememberMeButton: UIButton!
+    @IBOutlet private weak var emailTextField: UITextField!
+    @IBOutlet private weak var logInButton: UIButton!
+    @IBOutlet private weak var passwordTextField: UITextField!
+    
+    private var boolean = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        button.isEnabled = false
-        activityIndicator.startAnimating()
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 3) {
-            self.activityIndicator.stopAnimating()
-            self.button.isEnabled = true
-        }
+        logInButton.layer.cornerRadius = 5
+        logInButton.titleLabel?.textAlignment = NSTextAlignment.center
+        emailTextField.setBottomBorder()
+        passwordTextField.setBottomBorder()
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
     
-    @IBAction func buttonAction(_ sender: Any) {
-        if(!selected){
-            updateLabel()
-            activityIndicator.hidesWhenStopped = true
-            activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.gray
-            activityIndicator.startAnimating()
-            button.alpha = 0.5
-            selected = true
+    //MARK: - Navigation -
+    
+    @IBAction private func rememberMeClick(_ sender: Any) {
+        if boolean {
+            rememberMeButton.setImage(UIImage(named: "ic-checkbox-filled"), for: .normal)
+            boolean = false
         } else {
-            updateLabel()
-            activityIndicator.stopAnimating()
-            button.alpha = 1.0
-            selected = false
-            button.isEnabled = true
-            
+            rememberMeButton.setImage(UIImage(named: "ic-checkbox-empty"), for: .normal)
+            boolean = true
         }
-        
     }
     
-    func updateLabel() {
-        numberOfTaps += 1
-        label.text = "Number of taps: \(numberOfTaps)"
+    @IBAction private func logInClick(_ sender: Any) {
+        let storyboard = UIStoryboard(name: "Home", bundle: nil)
+        let viewControllerHome = storyboard.instantiateViewController(withIdentifier: "HomeViewController")
+        navigationController?.pushViewController(viewControllerHome, animated: true)
     }
-
+    
+    @IBAction private func createAnAccountClick(_ sender: Any) {
+        let storyboard = UIStoryboard(name: "Login", bundle: nil)
+        let viewControllerHome = storyboard.instantiateViewController(withIdentifier: "CreateAccountViewController")
+        navigationController?.present(viewControllerHome, animated: true)
+    }
+    
 }
