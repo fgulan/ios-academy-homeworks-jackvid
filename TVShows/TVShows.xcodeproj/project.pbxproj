@@ -13,6 +13,7 @@
 		5C76B0DB20FE537A000748F6 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C76B0DA20FE537A000748F6 /* Extensions.swift */; };
 		5C76B0DF20FF2024000748F6 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C76B0DE20FF2024000748F6 /* HomeViewController.swift */; };
 		5C76B0E120FF203A000748F6 /* Home.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5C76B0E020FF203A000748F6 /* Home.storyboard */; };
+		5C76B0E320FF3662000748F6 /* CreateAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C76B0E220FF3662000748F6 /* CreateAccountViewController.swift */; };
 		5CFDDC3C20F6337000320CC9 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CFDDC3B20F6337000320CC9 /* LoginViewController.swift */; };
 		5CFDDC3E20F6338C00320CC9 /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5CFDDC3D20F6338C00320CC9 /* Login.storyboard */; };
 		6ADB87541EE4F32F0D9C525C /* Pods_TVShows.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84ED41B5B4ACE0152214B026 /* Pods_TVShows.framework */; };
@@ -29,6 +30,7 @@
 		5C76B0DA20FE537A000748F6 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		5C76B0DE20FF2024000748F6 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		5C76B0E020FF203A000748F6 /* Home.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Home.storyboard; sourceTree = "<group>"; };
+		5C76B0E220FF3662000748F6 /* CreateAccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAccountViewController.swift; sourceTree = "<group>"; };
 		5CFDDC3B20F6337000320CC9 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		5CFDDC3D20F6338C00320CC9 /* Login.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Login.storyboard; sourceTree = "<group>"; };
 		84ED41B5B4ACE0152214B026 /* Pods_TVShows.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TVShows.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -92,6 +94,7 @@
 			children = (
 				5CFDDC3B20F6337000320CC9 /* LoginViewController.swift */,
 				5CFDDC3D20F6338C00320CC9 /* Login.storyboard */,
+				5C76B0E220FF3662000748F6 /* CreateAccountViewController.swift */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -230,6 +233,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5C76B0E320FF3662000748F6 /* CreateAccountViewController.swift in Sources */,
 				5CFDDC3C20F6337000320CC9 /* LoginViewController.swift in Sources */,
 				5C76B0DB20FE537A000748F6 /* Extensions.swift in Sources */,
 				5C75A70E20EE6F2900393B04 /* AppDelegate.swift in Sources */,

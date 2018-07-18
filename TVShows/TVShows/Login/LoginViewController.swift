@@ -12,22 +12,19 @@ import SVProgressHUD
 class LoginViewController: UIViewController {
     
     //MARK: - Private -
-    @IBOutlet private weak var RememberMeButton: UIButton!
-    
-    @IBOutlet private weak var LogInButton: UIButton!
-    
-    @IBOutlet private weak var UsernameTextField: UITextField!
-    
-    @IBOutlet private weak var PasswordTextField: UITextField!
+    @IBOutlet private weak var rememberMeButton: UIButton!
+    @IBOutlet private weak var emailTextField: UITextField!
+    @IBOutlet private weak var logInButton: UIButton!
+    @IBOutlet private weak var passwordTextField: UITextField!
     
     private var boolean = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        LogInButton.layer.cornerRadius = 5
-        LogInButton.titleLabel?.textAlignment = NSTextAlignment.center
-        UsernameTextField.setBottomBorder()
-        PasswordTextField.setBottomBorder()
+        logInButton.layer.cornerRadius = 5
+        logInButton.titleLabel?.textAlignment = NSTextAlignment.center
+        emailTextField.setBottomBorder()
+        passwordTextField.setBottomBorder()
     }
     
     override func didReceiveMemoryWarning() {
@@ -37,32 +34,25 @@ class LoginViewController: UIViewController {
     //MARK: - Navigation -
     
     @IBAction private func rememberMeClick(_ sender: Any) {
-        if(boolean) {
-            RememberMeButton.setImage(UIImage(named: "ic-checkbox-filled"), for: .normal)
+        if boolean {
+            rememberMeButton.setImage(UIImage(named: "ic-checkbox-filled"), for: .normal)
             boolean = false
         } else {
-            RememberMeButton.setImage(UIImage(named: "ic-checkbox-empty"), for: .normal)
+            rememberMeButton.setImage(UIImage(named: "ic-checkbox-empty"), for: .normal)
             boolean = true
         }
     }
     
-    @IBAction func logInClick(_ sender: Any) {
-        /*
-         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-         let vc = storyboard.instantiateViewControllerWithIdentifier("NewsDetailsVCID") as NewsDetailsViewController
-         vc.newsObj = newsObj
-         navigationController?.pushViewController(vc,
-         animated: true)
-        */
+    @IBAction private func logInClick(_ sender: Any) {
         let storyboard = UIStoryboard(name: "Home", bundle: nil)
         let viewControllerHome = storyboard.instantiateViewController(withIdentifier: "HomeViewController")
         navigationController?.pushViewController(viewControllerHome, animated: true)
     }
     
-    @IBAction func createAnAccountClick(_ sender: Any) {
-        let storyboard = UIStoryboard(name: "Home", bundle: nil)
-        let viewControllerHome = storyboard.instantiateViewController(withIdentifier: "HomeViewController")
-        navigationController?.pushViewController(viewControllerHome, animated: true)
+    @IBAction private func createAnAccountClick(_ sender: Any) {
+        let storyboard = UIStoryboard(name: "Login", bundle: nil)
+        let viewControllerHome = storyboard.instantiateViewController(withIdentifier: "CreateAccountViewController")
+        navigationController?.present(viewControllerHome, animated: true)
     }
     
 }
