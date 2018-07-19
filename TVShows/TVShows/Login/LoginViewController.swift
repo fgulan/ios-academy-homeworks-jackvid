@@ -10,9 +10,14 @@ import UIKit
 import SVProgressHUD
 import Alamofire
 import CodableAlamofire
+import PromiseKit
 
 struct LoginData: Codable {
     let token: String
+}
+
+protocol Test {
+    func myFunc()
 }
 
 class LoginViewController: UIViewController {
@@ -38,9 +43,7 @@ class LoginViewController: UIViewController {
         passwordTextField.setBottomBorder()
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-    }
+
     
     //MARK: - Navigation -
     
@@ -55,10 +58,23 @@ class LoginViewController: UIViewController {
     }
     
     @IBAction private func logInClick(_ sender: Any) {
+        _login(user: emailTextField.text!, password: passwordTextField.text!)
+    }
+    
+    @IBAction private func createAnAccountClick(_ sender: Any) {
+        let storyboard = UIStoryboard(name: "Login", bundle: nil)
         
+        let createViewController = storyboard.instantiateViewController(withIdentifier: "CreateAccountViewController") as! CreateAccountViewController
+        createViewController.delegate = self
+        
+        let nc = UINavigationController(rootViewController: createViewController)
+        navigationController?.present(nc, animated: true, completion: nil)
+    }
+
+    private func _login(user: String, password: String) {
         let parameters: [String: String] = [
-            "email": emailTextField.text!,
-            "password": passwordTextField.text!
+            "email": user,
+            "password": password
         ]
         
         SVProgressHUD.show()
@@ -69,8 +85,7 @@ class LoginViewController: UIViewController {
                      parameters: parameters,
                      encoding: JSONEncoding.default)
             .validate()
-            .responseDecodableObject(keyPath: "data", decoder: JSONDecoder()) {
-                (response: DataResponse<LoginData>) in
+            .responseDecodableObject(keyPath: "data", decoder: JSONDecoder()) { (response: DataResponse<LoginData>) in
                 
                 switch response.result {
                 case .success(let loginData):
@@ -87,14 +102,13 @@ class LoginViewController: UIViewController {
                     print("API \(error)")
                     SVProgressHUD.dismiss(withDelay: 1)
                 }
-               
         }
     }
     
-    @IBAction private func createAnAccountClick(_ sender: Any) {
-        let storyboard = UIStoryboard(name: "Login", bundle: nil)
-        let viewControllerHome = storyboard.instantiateViewController(withIdentifier: "CreateAccountViewController")
-        navigationController?.pushViewController(viewControllerHome, animated: true)
+}
+
+extension LoginViewController: LoginDelegate {
+    func didCreateAccount(username: String, password: String) {
+        _login(user: username, password: password)
     }
-    
 }

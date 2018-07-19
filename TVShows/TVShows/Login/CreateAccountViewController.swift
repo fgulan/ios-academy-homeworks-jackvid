@@ -23,6 +23,9 @@ struct User: Codable {
     }
 }
 
+protocol LoginDelegate: class {
+    func didCreateAccount(username: String, password: String)
+}
 
 class CreateAccountViewController: UIViewController {
 
@@ -41,6 +44,8 @@ class CreateAccountViewController: UIViewController {
     private var user : User?
     //MARK - System -
     
+    weak var delegate: LoginDelegate?
+
     override func viewDidLoad() {
         super.viewDidLoad()
         createButton.layer.cornerRadius = 5
@@ -58,55 +63,69 @@ class CreateAccountViewController: UIViewController {
     
     // MARK: - Navigation
 
+    @IBAction func didSelectCancel(_ sender: Any) {
+        dismiss(animated: true, completion: nil)
+    }
+
     @IBAction func createButtonClicked(_ sender: Any) {
-        if (emailTextField.text?.isEmpty)! {
+        
+        guard !(emailTextField.text?.isEmpty)! || !(passwordTextField.text?.isEmpty)! else {
+            emailLabel.isHidden = false
+            emailLabel.text = "Set valid email adress"
+            passwordLabel.isHidden = false
+            passwordLabel.text = "Set valid password"
+            return
+        }
+        
+        guard !(emailTextField.text?.isEmpty)! else {
             emailLabel.isHidden = false
             emailLabel.text = "Set valid email adress"
             return
         }
-        else if (passwordTextField.text?.isEmpty)! {
+        
+        emailLabel.isHidden = true
+        
+        guard !(passwordTextField.text?.isEmpty)! else {
             passwordLabel.isHidden = false
             passwordLabel.text = "Set valid password"
             return
-        } else {
-        
-            let parameters: [String: String] = [
-                "email": emailTextField.text!,
-                "password": passwordTextField.text!
-            ]
-            
-            SVProgressHUD.show()
-            
-            Alamofire
-                .request("https://api.infinum.academy/api/users",
-                         method: .post,
-                         parameters: parameters,
-                         encoding: JSONEncoding.default)
-                .validate()
-                .responseDecodableObject(keyPath: "data", decoder: JSONDecoder()) {
-            (response: DataResponse<User>) in
-                    
-                    switch response.result {
-                    case .success(let user):
-                        self.user = user
-                        SVProgressHUD.setStatus("Success")
-                        print("Success: \(user)")
-                        SVProgressHUD.dismiss(withDelay: 1)
-                        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1) {
-                            let storyboard = UIStoryboard(name: "Login", bundle: nil)
-                            let viewControllerHome = storyboard.instantiateViewController(withIdentifier: "LoginViewController")
-                            self.navigationController?.pushViewController(viewControllerHome, animated: true)
-                        }
-                    case .failure(let error):
-                        SVProgressHUD.setStatus("ERROR")
-                        print("API \(error)")
-                        SVProgressHUD.dismiss(withDelay: 1)
-                        
-                    }
-            }
-            
         }
         
+        passwordLabel.isHidden = true
+        
+        
+        let parameters: [String: String] = [
+            "email": emailTextField.text!,
+            "password": passwordTextField.text!
+        ]
+            
+        SVProgressHUD.show()
+            
+        Alamofire
+            .request("https://api.infinum.academy/api/users",
+                        method: .post,
+                        parameters: parameters,
+                        encoding: JSONEncoding.default)
+            .validate()
+            .responseDecodableObject(keyPath: "data", decoder: JSONDecoder()) { [weak self] (response: DataResponse<User>) in
+                    
+                guard let `self` = self else { return }
+
+                switch response.result {
+                case .success(let user):
+                    self.user = user
+                    SVProgressHUD.setStatus("Success")
+                    print("Success: \(user)")
+                    SVProgressHUD.dismiss(withDelay: 1)
+                    self.delegate?.didCreateAccount(username: self.emailTextField.text!, password: self.passwordTextField.text!)
+                    self.dismiss(animated: true, completion: nil)
+                        
+                case .failure(let error):
+                    SVProgressHUD.setStatus("ERROR")
+                    print("API \(error)")
+                    SVProgressHUD.dismiss(withDelay: 1)
+                }
+
+        }
     }
-    
 }
