@@ -69,17 +69,15 @@ class CreateAccountViewController: UIViewController {
 
     @IBAction func createButtonClicked(_ sender: Any) {
         
-        guard !(emailTextField.text?.isEmpty)! || !(passwordTextField.text?.isEmpty)! else {
-            emailLabel.isHidden = false
-            emailLabel.text = "Set valid email adress"
-            passwordLabel.isHidden = false
-            passwordLabel.text = "Set valid password"
-            return
-        }
-        
         guard !(emailTextField.text?.isEmpty)! else {
             emailLabel.isHidden = false
             emailLabel.text = "Set valid email adress"
+            if (passwordTextField.text?.isEmpty)! {
+                passwordLabel.isHidden = false
+                passwordLabel.text = "Set valid password"
+            } else {
+                passwordLabel.isHidden = true
+            }
             return
         }
         
@@ -88,6 +86,12 @@ class CreateAccountViewController: UIViewController {
         guard !(passwordTextField.text?.isEmpty)! else {
             passwordLabel.isHidden = false
             passwordLabel.text = "Set valid password"
+            if (emailTextField.text?.isEmpty)! {
+                emailLabel.isHidden = false
+                emailLabel.text = "Set valid email adress"
+            } else {
+                emailLabel.isHidden = true
+            }
             return
         }
         

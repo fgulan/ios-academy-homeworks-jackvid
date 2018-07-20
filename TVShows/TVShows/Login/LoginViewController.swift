@@ -65,6 +65,7 @@ class LoginViewController: UIViewController {
         let storyboard = UIStoryboard(name: "Login", bundle: nil)
         
         let createViewController = storyboard.instantiateViewController(withIdentifier: "CreateAccountViewController") as! CreateAccountViewController
+        
         createViewController.delegate = self
         
         let nc = UINavigationController(rootViewController: createViewController)
