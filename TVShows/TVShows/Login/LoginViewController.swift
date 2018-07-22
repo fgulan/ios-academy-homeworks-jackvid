@@ -12,12 +12,16 @@ import Alamofire
 import CodableAlamofire
 import PromiseKit
 
+//MARK: - Structs -
+
 struct LoginData: Codable {
     let token: String
 }
 
-protocol Test {
-    func myFunc()
+//MARK: - Protocols -
+
+protocol SessionDelegate: class {
+    func sessionId(token: String)
 }
 
 class LoginViewController: UIViewController {
@@ -33,6 +37,11 @@ class LoginViewController: UIViewController {
     
     private var loginData : LoginData?
     
+    //MARK: - Delegate -
+    
+    weak var delegate: SessionDelegate?
+    
+    
     //MARK: - System -
     
     override func viewDidLoad() {
@@ -42,8 +51,6 @@ class LoginViewController: UIViewController {
         emailTextField.setBottomBorder()
         passwordTextField.setBottomBorder()
     }
-    
-
     
     //MARK: - Navigation -
     
@@ -86,27 +93,44 @@ class LoginViewController: UIViewController {
                      parameters: parameters,
                      encoding: JSONEncoding.default)
             .validate()
-            .responseDecodableObject(keyPath: "data", decoder: JSONDecoder()) { (response: DataResponse<LoginData>) in
+            .responseDecodableObject(keyPath: "data", decoder: JSONDecoder()) { [weak self] (response: DataResponse<LoginData>) in
+                
+                guard let `self` = self else { return }
                 
                 switch response.result {
                 case .success(let loginData):
                     self.loginData = loginData
                     SVProgressHUD.setStatus("Success")
                     SVProgressHUD.dismiss(withDelay: 1)
+                    //self.delegate?.sessionId(token: loginData.token)
                     DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1) {
                         let storyboard = UIStoryboard(name: "Home", bundle: nil)
-                        let viewControllerHome = storyboard.instantiateViewController(withIdentifier: "HomeViewController")
+                        let viewControllerHome = storyboard.instantiateViewController(withIdentifier: "HomeViewController") as! HomeViewController
+                        
+                        self.delegate = viewControllerHome
+                        
                         self.navigationController?.pushViewController(viewControllerHome, animated: true)
+                        self.delegate?.sessionId(token: loginData.token)
                     }
+                    
                 case .failure(let error):
-                    SVProgressHUD.setStatus("ERROR")
+                    SVProgressHUD.dismiss()
                     print("API \(error)")
-                    SVProgressHUD.dismiss(withDelay: 1)
+                    let alertController = UIAlertController(title: "Error", message: "You insert wrong password or email", preferredStyle: .alert)
+                    
+                    self.present(alertController, animated: true, completion: nil)
+                    
+                    let action = UIAlertAction(title: "Cancel", style: .cancel) { (action:UIAlertAction) in
+                        self.dismiss(animated: true, completion: nil)
+                    }
+                    alertController.addAction(action)
                 }
         }
     }
     
 }
+
+//MARK: - Extensions -
 
 extension LoginViewController: LoginDelegate {
     func didCreateAccount(username: String, password: String) {
