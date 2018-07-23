@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5C125DA82105E919002BE8D4 /* TVShowsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C125DA72105E919002BE8D4 /* TVShowsTableViewCell.swift */; };
 		5C75A70E20EE6F2900393B04 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C75A70D20EE6F2900393B04 /* AppDelegate.swift */; };
 		5C75A71520EE6F2C00393B04 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5C75A71420EE6F2C00393B04 /* Assets.xcassets */; };
 		5C75A71820EE6F2C00393B04 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5C75A71620EE6F2C00393B04 /* LaunchScreen.storyboard */; };
@@ -22,6 +23,7 @@
 /* Begin PBXFileReference section */
 		011356EFB458379FC86A7E62 /* Pods-TVShows.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TVShows.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TVShows/Pods-TVShows.debug.xcconfig"; sourceTree = "<group>"; };
 		48F4930C3C33A5BE4B1F0FE7 /* Pods-TVShows.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TVShows.release.xcconfig"; path = "Pods/Target Support Files/Pods-TVShows/Pods-TVShows.release.xcconfig"; sourceTree = "<group>"; };
+		5C125DA72105E919002BE8D4 /* TVShowsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVShowsTableViewCell.swift; sourceTree = "<group>"; };
 		5C75A70A20EE6F2900393B04 /* TVShows.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TVShows.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5C75A70D20EE6F2900393B04 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5C75A71420EE6F2C00393B04 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -85,6 +87,7 @@
 			children = (
 				5C76B0DE20FF2024000748F6 /* HomeViewController.swift */,
 				5C76B0E020FF203A000748F6 /* Home.storyboard */,
+				5C125DA72105E919002BE8D4 /* TVShowsTableViewCell.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -237,6 +240,7 @@
 			files = (
 				5C76B0E320FF3662000748F6 /* CreateAccountViewController.swift in Sources */,
 				5CFDDC3C20F6337000320CC9 /* LoginViewController.swift in Sources */,
+				5C125DA82105E919002BE8D4 /* TVShowsTableViewCell.swift in Sources */,
 				5C76B0DB20FE537A000748F6 /* Extensions.swift in Sources */,
 				5C75A70E20EE6F2900393B04 /* AppDelegate.swift in Sources */,
 				5C76B0DF20FF2024000748F6 /* HomeViewController.swift in Sources */,

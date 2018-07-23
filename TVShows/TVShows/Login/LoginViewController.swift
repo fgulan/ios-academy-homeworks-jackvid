@@ -18,12 +18,6 @@ struct LoginData: Codable {
     let token: String
 }
 
-//MARK: - Protocols -
-
-protocol SessionDelegate: class {
-    func sessionId(token: String)
-}
-
 class LoginViewController: UIViewController {
     
     //MARK: - Private -
@@ -36,11 +30,6 @@ class LoginViewController: UIViewController {
     private var boolean = true
     
     private var loginData : LoginData?
-    
-    //MARK: - Delegate -
-    
-    weak var delegate: SessionDelegate?
-    
     
     //MARK: - System -
     
@@ -101,18 +90,12 @@ class LoginViewController: UIViewController {
                 case .success(let loginData):
                     self.loginData = loginData
                     SVProgressHUD.setStatus("Success")
-                    SVProgressHUD.dismiss(withDelay: 1)
-                    //self.delegate?.sessionId(token: loginData.token)
-                    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1) {
-                        let storyboard = UIStoryboard(name: "Home", bundle: nil)
-                        let viewControllerHome = storyboard.instantiateViewController(withIdentifier: "HomeViewController") as! HomeViewController
-                        
-                        self.delegate = viewControllerHome
-                        
-                        self.navigationController?.pushViewController(viewControllerHome, animated: true)
-                        self.delegate?.sessionId(token: loginData.token)
-                    }
+                    let storyboard = UIStoryboard(name: "Home", bundle: nil)
+                    let homeViewController = storyboard.instantiateViewController(withIdentifier: "HomeViewController") as! HomeViewController
                     
+                    homeViewController.token = loginData.token
+                    self.navigationController?.pushViewController(homeViewController, animated: true)
+                
                 case .failure(let error):
                     SVProgressHUD.dismiss()
                     print("API \(error)")
@@ -120,8 +103,8 @@ class LoginViewController: UIViewController {
                     
                     self.present(alertController, animated: true, completion: nil)
                     
-                    let action = UIAlertAction(title: "Cancel", style: .cancel) { (action:UIAlertAction) in
-                        self.dismiss(animated: true, completion: nil)
+                    let action = UIAlertAction(title: "Cancel", style: .cancel) { [weak self] (action:UIAlertAction) in
+                        self?.dismiss(animated: true, completion: nil)
                     }
                     alertController.addAction(action)
                 }
