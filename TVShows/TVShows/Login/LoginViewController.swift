@@ -27,6 +27,8 @@ class LoginViewController: UIViewController {
     @IBOutlet private weak var logInButton: UIButton!
     @IBOutlet private weak var passwordTextField: UITextField!
     
+    @IBOutlet weak var appIcon: UIImageView!
+    
     private var boolean = true
     
     private var loginData : LoginData?
@@ -39,6 +41,10 @@ class LoginViewController: UIViewController {
         logInButton.titleLabel?.textAlignment = NSTextAlignment.center
         emailTextField.setBottomBorder()
         passwordTextField.setBottomBorder()
+        
+        emailTextField.text = "jakov.vidak@gmail.com"
+        passwordTextField.text = "infinum1"
+        
     }
     
     //MARK: - Navigation -

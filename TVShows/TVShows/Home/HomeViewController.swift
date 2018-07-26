@@ -96,11 +96,11 @@ class HomeViewController: UIViewController {
             
                 switch response.result {
                 case .success(let showsData):
-                    //print("\(showsData)")
+                    print("ndasnhbdhjashjds: \(showsData)")
                     self.shows = showsData
                     self.tableView.reloadData()
                     SVProgressHUD.dismiss()
-                    print("GOTOV JE API CALL")
+                    //print("GOTOV JE API CALL")
                     
                 case .failure(let error):
                     SVProgressHUD.dismiss()
@@ -133,7 +133,6 @@ extension HomeViewController: UITableViewDelegate {
 extension HomeViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        //print("++++++++++++++ COUNT OD SHOWS \(shows.count)")
         return shows.count
     }
     
@@ -158,11 +157,8 @@ extension HomeViewController: UITableViewDataSource {
         let showDetailsViewController = storyboard.instantiateViewController(
             withIdentifier: "ShowDetailsViewController") as! ShowDetailsViewController
         
-        
         showDetailsViewController.showId = shows[indexPath.row].id
         showDetailsViewController.token = token
-        
-        /*print("ID: \(String(describing: showDetailsViewController.showId)) TOKEN: \(String(describing: showDetailsViewController.token))")*/
         
         self.navigationController?.pushViewController(showDetailsViewController, animated: true)
         

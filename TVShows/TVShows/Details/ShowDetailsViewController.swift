@@ -12,7 +12,7 @@ struct ShowDescription: Codable {
     let title: String
     let description: String
     let id: String
-    let likesCount: Int
+    let likesCount: Int?
     let imageUrl: String
     
     enum CodingKeys: String, CodingKey {
@@ -49,17 +49,14 @@ class ShowDetailsViewController: UIViewController {
             tableView.dataSource = self
             tableView.delegate = self
             tableView.tableFooterView = UIView()
+            tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 100, right: 0)
         }
     }
     
     
     private var showDescription : ShowDescription?
-    
-    private var episodes: [Episodes] = []
-    
-    private var boolean = false
-    
-    private var boolean2 = true
+    private var episodes: [Episodes]?
+    private var button = UIButton()
     
     //MARK: - Public -
     
@@ -79,17 +76,58 @@ class ShowDetailsViewController: UIViewController {
             return
         }
         
+        
+        
+        button = UIButton(type: .custom)
+        //self.button.setTitleColor(UIColor.orange, for: .normal)
+        //self.button.addTarget(self, action: #selector(ButtonClick(_:)), for: UIControlEvents.touchUpInside)
+        self.view.addSubview(button)
+        
+        //self.navigationController?.setNavigationBarHidden(true, animated: true)
+        
+        button.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
+        
         SVProgressHUD.show()
         
-        
-        apiCallForEpisodes(token: token, showId: showId)
         apiCall(token: token, showId: showId)
-        
-        SVProgressHUD.dismiss()
-        
     }
     
     // MARK: - Navigation
+    
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        
+        button.layer.cornerRadius = button.layer.frame.size.width/2
+        button.clipsToBounds = true
+        button.setImage(UIImage(named:"ic-fab-button"), for: .normal)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            button.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: 0),
+            button.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 0),
+            button.widthAnchor.constraint(equalToConstant: 75),
+            button.heightAnchor.constraint(equalToConstant: 75)])
+    }
+    
+    @objc func buttonAction(sender: UIButton!) {
+        
+        let storyboard = UIStoryboard(name: "Home", bundle: nil)
+        let addEpisodeViewController = storyboard.instantiateViewController(
+            withIdentifier: "AddNewEpisodeViewController") as! AddNewEpisodeViewController
+        
+        addEpisodeViewController.token = token
+        addEpisodeViewController.showId = showId
+        
+        let navigationController = UINavigationController.init(rootViewController: addEpisodeViewController)
+        
+        present(navigationController, animated: true, completion: nil)
+        
+        /*let storyboard = UIStoryboard(name: "Home", bundle: nil)
+        let addEpisodeViewController = storyboard.instantiateViewController(
+            withIdentifier: "AddNewEpisodeViewController") as! AddNewEpisodeViewController
+        
+        self.navigationController?.present(addEpisodeViewController, animated: true)*/
+    }
+    
     
     func apiCall(token: String, showId: String) {
         
@@ -108,22 +146,13 @@ class ShowDetailsViewController: UIViewController {
                 
                 switch response.result {
                 case .success(let showDescription):
-                    print("OVO JE DESCRIPTION: \(showDescription)")
+                    //print("OVO JE DESCRIPTION: \(showDescription)")
                     self.showDescription = showDescription
-                    self.tableView.reloadData()
-                    
-                    if self.boolean {
-                        SVProgressHUD.dismiss()
-                    } else {
-                        self.boolean = true
-                    }
-                    
-                    print("GOTOV JE API CALL za description")
-                    
+                    self.apiCallForEpisodes(token: token, showId: showId)
                 case .failure(let error):
                     SVProgressHUD.dismiss()
                     print("Failure: \(error)")
-                    print("API \(error)")
+                    //print("API \(error)")
                 }
         }
     }
@@ -143,25 +172,17 @@ class ShowDetailsViewController: UIViewController {
                 DataResponse<[Episodes]>) in
                 
                 guard let `self` = self else { return }
-                
+                SVProgressHUD.dismiss()
+
                 switch response.result {
                 case .success(let episodes):
-                    print("OVO SU EPIZODE: \(episodes)")
+                    //print("OVO SU EPIZODE: \(episodes)")
                     self.episodes = episodes
                     self.tableView.reloadData()
-                    
-                    if self.boolean {
-                        SVProgressHUD.dismiss()
-                    } else {
-                        self.boolean = true
-                    }
-                    
-                    print("GOTOV JE API CALL za epizode")
-                    
                 case .failure(let error):
                     SVProgressHUD.dismiss()
                     print("Failure: \(error)")
-                    print("API \(error)")
+                    //print("API \(error)")
                 }
         }
     }
@@ -175,31 +196,26 @@ extension ShowDetailsViewController: UITableViewDelegate {
 extension ShowDetailsViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1 + episodes.count
+        if let count = episodes?.count {
+            return 1 + count
+        }
+        return 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        if boolean2 {
+        if indexPath.row == 0 {
             let cell = tableView.dequeueReusableCell(
                 withIdentifier: "ShowDescriptionTableViewCell",
                 for: indexPath) as! ShowDescriptionTableViewCell
-            
-            cell.configure(with: showDescription, numberOfEpisodes: episodes.count)
-            
-            boolean2 = false
-            
+            cell.configure(with: showDescription, numberOfEpisodes: episodes!.count)
             return cell
         } else {
-            
-            print("Sada sam tuuuuuu")
-            print("\(episodes[indexPath.row])")
-            
             let cell = tableView.dequeueReusableCell(
                 withIdentifier: "ShowEpisodesTableViewCell",
                 for: indexPath) as! ShowEpisodesTableViewCell
-            
-            cell.configure(with: episodes[indexPath.row], number: indexPath.row)
+            let index = indexPath.row - 1
+            cell.configure(with: episodes![index], number: index + 1)
             
             return cell
         }
