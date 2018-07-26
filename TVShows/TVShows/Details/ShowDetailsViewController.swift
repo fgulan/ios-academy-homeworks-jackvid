@@ -47,7 +47,7 @@ class ShowDetailsViewController: UIViewController {
             tableView.dataSource = self
             tableView.delegate = self
             tableView.tableFooterView = UIView()
-            tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 100, right: 0)
+            tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 75, right: 0)
         }
     }
     
@@ -87,7 +87,7 @@ class ShowDetailsViewController: UIViewController {
         
         SVProgressHUD.show()
         
-        apiCall(token: token, showId: showId)
+        loadDescription(token: token, showId: showId)
     }
     
     // MARK: - Navigation
@@ -122,7 +122,7 @@ class ShowDetailsViewController: UIViewController {
     }
     
     
-    func apiCall(token: String, showId: String) {
+    func loadDescription(token: String, showId: String) {
         
         let headers = ["Authorization": token]
     
@@ -139,19 +139,17 @@ class ShowDetailsViewController: UIViewController {
                 
                 switch response.result {
                 case .success(let showDescription):
-                    //print("OVO JE DESCRIPTION: \(showDescription)")
                     self.showDescription = showDescription
-                    self.apiCallForEpisodes(token: token, showId: showId)
+                    self.loadEpisodes(token: token, showId: showId)
                 case .failure(let error):
                     SVProgressHUD.dismiss()
                     print("Failure: \(error)")
-                    //print("API \(error)")
                 }
         }
     }
     
     
-    func apiCallForEpisodes(token: String, showId: String){
+    func loadEpisodes(token: String, showId: String){
         
         let headers = ["Authorization": token]
         
@@ -169,13 +167,11 @@ class ShowDetailsViewController: UIViewController {
 
                 switch response.result {
                 case .success(let episodes):
-                    //print("OVO SU EPIZODE: \(episodes)")
                     self.episodes = episodes
                     self.tableView.reloadData()
                 case .failure(let error):
                     SVProgressHUD.dismiss()
                     print("Failure: \(error)")
-                    //print("API \(error)")
                 }
         }
     }
@@ -185,8 +181,7 @@ class ShowDetailsViewController: UIViewController {
 
 extension ShowDetailsViewController: ShowDataDelegate {
     func reloadTable(token: String, showId: String) {
-        apiCall(token: token, showId: showId)
-        //tableView.reloadData()
+        loadDescription(token: token, showId: showId)
     }
 }
 

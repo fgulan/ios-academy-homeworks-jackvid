@@ -38,8 +38,7 @@ class HomeViewController: UIViewController {
     //MARK: - System -
 
     override func viewDidLoad() {
-        //navigationController?.setViewControllers([self], animated: false)
-        self.navigationItem.setHidesBackButton(true, animated:true); //koristim ovo za skrivanje back gumba
+        self.navigationItem.setHidesBackButton(true, animated:true);
         super.viewDidLoad()
         self.title = "Shows"
         apiCall()
@@ -100,12 +99,10 @@ class HomeViewController: UIViewController {
                     self.shows = showsData
                     self.tableView.reloadData()
                     SVProgressHUD.dismiss()
-                    //print("GOTOV JE API CALL")
                     
                 case .failure(let error):
                     SVProgressHUD.dismiss()
                     print("Failure: \(error)")
-                    //print("API \(error)")
                 }
         }
     }
@@ -137,8 +134,6 @@ extension HomeViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        //print("SHOWS: \(shows)")
         
         let cell = tableView.dequeueReusableCell(
             withIdentifier: "TVShowsTableViewCell",
