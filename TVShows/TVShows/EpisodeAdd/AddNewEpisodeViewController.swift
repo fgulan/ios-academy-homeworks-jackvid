@@ -1,12 +1,12 @@
-//
-//  AddNewEpisodeViewController.swift
-//  TVShows
-//
-//  Created by Infinum Student Academy on 25/07/2018.
-//  Copyright © 2018 Jakov Vidak. All rights reserved.
-//
-
 import UIKit
+import SVProgressHUD
+import Alamofire
+import CodableAlamofire
+import PromiseKit
+
+protocol ShowDataDelegate: class {
+    func reloadTable(token: String, showId: String)
+}
 
 class AddNewEpisodeViewController: UIViewController {
     
@@ -22,6 +22,11 @@ class AddNewEpisodeViewController: UIViewController {
     public var token: String?
     public var showId: String?
     
+    //MARK: - Delegate -
+    
+    weak var delegate: ShowDataDelegate?
+    
+    //MARK: - System -
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,43 +43,99 @@ class AddNewEpisodeViewController: UIViewController {
                                                             target: self,
                                                             action: #selector(addShowSelected))
         
-        guard let token = token else {
-            print("ERROR converting token in ShowDetailsViewController")
-            return
-        }
-        
-        guard let showId = showId else {
-            print("ERROR converting showId in ShowDetailsViewController")
-            return
-        }
-
         episodeTitleTextField.setBottomBorder()
         seasonNumberTextField.setBottomBorder()
         episodeNumberTextField.setBottomBorder()
         descriptionTextField.setBottomBorder()
-        
-        
-        
+    
     }
 
     // MARK: - Navigation
     
-    @objc func cancleSelected() {
+    @objc private func cancleSelected() {
         dismiss(animated: true, completion: nil)
     }
     
-    @objc func addShowSelected() {
+    @objc private func addShowSelected() {
         
-    }
-    
-    /*
-    // MARK: - Navigation
+        guard let token = token else {
+            print("ERROR converting token in AddNewEpisodeViewController")
+            return
+        }
+        
+        guard let showId = showId else {
+            print("ERROR converting showId in AddNewEpisodeViewController")
+            return
+        }
+        
+        guard let title = episodeTitleTextField.text else {
+            print("ERROR converting title in AddNewEpisodeViewController")
+            return
+        }
+        
+        guard let description = descriptionTextField.text else {
+            print("ERROR converting description in AddNewEpisodeViewController")
+            return
+        }
+        
+        guard let episodeNumber = episodeNumberTextField.text else {
+            print("ERROR converting episodeNumber in AddNewEpisodeViewController")
+            return
+        }
+        
+        guard let season = seasonNumberTextField.text else {
+            print("ERROR converting season in AddNewEpisodeViewController")
+            return
+        }
+        
+        let headers = ["Authorization": token]
+        
+        let parameters: [String: String] = [
+            "showId": showId,
+            "mediaId": "",
+            "title": title,
+            "description": description,
+            "episodeNumber": episodeNumber,
+            "season": season
+        ]
+        
+        SVProgressHUD.show()
+        
+        Alamofire
+            .request("https://api.infinum.academy/api/episodes",
+                     method: .post,
+                     parameters: parameters,
+                     encoding: JSONEncoding.default,
+                     headers: headers)
+            .validate()
+            .responseJSON { [weak self] response in
+                
+                guard let `self` = self else { return }
+                
+                //print("Usao sma tuu")
+                
+                switch response.result {
+                case .success:
+                    
+                    SVProgressHUD.dismiss()
+                    self.delegate?.reloadTable(token: token, showId: showId)
+                    self.dismiss(animated: true, completion: nil)
+                    
+                case .failure(let error):
+                    
+                    SVProgressHUD.dismiss()
+                    print("API \(error)")
+                    let alertController = UIAlertController(title: "Error", message: "PROBLEM!!!", preferredStyle: .alert)
+                    
+                    self.present(alertController, animated: true, completion: nil)
+                    
+                    let action = UIAlertAction(title: "Cancel", style: .cancel) { [weak self] (action:UIAlertAction) in
+                        self?.dismiss(animated: true, completion: nil)
+                    }
+                    alertController.addAction(action)
+                }
+            }
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
     }
-    */
 
 }

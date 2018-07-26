@@ -1,5 +1,3 @@
-
-
 import UIKit
 import SVProgressHUD
 import Alamofire
@@ -116,16 +114,11 @@ class ShowDetailsViewController: UIViewController {
         
         addEpisodeViewController.token = token
         addEpisodeViewController.showId = showId
+        addEpisodeViewController.delegate = self
         
         let navigationController = UINavigationController.init(rootViewController: addEpisodeViewController)
         
         present(navigationController, animated: true, completion: nil)
-        
-        /*let storyboard = UIStoryboard(name: "Home", bundle: nil)
-        let addEpisodeViewController = storyboard.instantiateViewController(
-            withIdentifier: "AddNewEpisodeViewController") as! AddNewEpisodeViewController
-        
-        self.navigationController?.present(addEpisodeViewController, animated: true)*/
     }
     
     
@@ -187,6 +180,16 @@ class ShowDetailsViewController: UIViewController {
         }
     }
 }
+
+//MARK: - Extensions -
+
+extension ShowDetailsViewController: ShowDataDelegate {
+    func reloadTable(token: String, showId: String) {
+        apiCall(token: token, showId: showId)
+        //tableView.reloadData()
+    }
+}
+
 
 extension ShowDetailsViewController: UITableViewDelegate {
 
