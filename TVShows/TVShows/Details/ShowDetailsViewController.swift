@@ -56,6 +56,7 @@ class ShowDetailsViewController: UIViewController {
     private var episodes: [Episodes]?
     private var button = UIButton()
     
+
     //MARK: - Public -
     
     public var token: String?
@@ -63,7 +64,9 @@ class ShowDetailsViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        tableView.separatorStyle = .none
+        
         guard let token = token else {
             print("ERROR converting token in ShowDetailsViewController")
             return
@@ -74,14 +77,12 @@ class ShowDetailsViewController: UIViewController {
             return
         }
         
-        
-        
         button = UIButton(type: .custom)
         //self.button.setTitleColor(UIColor.orange, for: .normal)
         //self.button.addTarget(self, action: #selector(ButtonClick(_:)), for: UIControlEvents.touchUpInside)
         self.view.addSubview(button)
         
-        //self.navigationController?.setNavigationBarHidden(true, animated: true)
+        self.navigationController?.setNavigationBarHidden(true, animated: true)
         
         button.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
         
@@ -175,6 +176,11 @@ class ShowDetailsViewController: UIViewController {
                 }
         }
     }
+    
+    public func dismissViewController() {
+        _ = navigationController?.popViewController(animated: true)
+    }
+    
 }
 
 //MARK: - Extensions -
@@ -206,6 +212,7 @@ extension ShowDetailsViewController: UITableViewDataSource {
             let cell = tableView.dequeueReusableCell(
                 withIdentifier: "ShowDescriptionTableViewCell",
                 for: indexPath) as! ShowDescriptionTableViewCell
+            cell.parentViewController = self
             cell.configure(with: showDescription, numberOfEpisodes: episodes!.count)
             return cell
         } else {

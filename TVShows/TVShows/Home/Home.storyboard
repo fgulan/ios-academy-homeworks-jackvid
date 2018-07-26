@@ -117,6 +117,15 @@
                                                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="N9A-j4-8S3">
+                                                    <rect key="frame" x="22" y="10" width="32" height="32"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <state key="normal" image="ic-navigate-back"/>
+                                                    <connections>
+                                                        <action selector="backButtonPressed:" destination="J8y-H9-mg7" eventType="touchUpInside" id="JYI-xh-1vK"/>
+                                                    </connections>
+                                                </button>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstAttribute="trailingMargin" secondItem="Jr2-5U-Tla" secondAttribute="trailing" constant="203" id="2av-HB-pHe"/>
@@ -138,6 +147,7 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
+                                            <outlet property="backButtonOutlet" destination="N9A-j4-8S3" id="4Oe-aH-R24"/>
                                             <outlet property="imageOfShow" destination="vWR-PB-RTQ" id="koU-b7-o2y"/>
                                             <outlet property="numberOfEpisodes" destination="Jr2-5U-Tla" id="opD-Te-ALb"/>
                                             <outlet property="showDescription" destination="Tmm-ff-Tjx" id="8y0-mm-v5Q"/>
@@ -171,6 +181,9 @@
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vte-Za-PoX">
                                                     <rect key="frame" x="345" y="19" width="24" height="24"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="24" id="WK8-lP-241"/>
+                                                    </constraints>
                                                     <state key="normal" image="ic-navigation-chevron-right-medium"/>
                                                 </button>
                                             </subviews>
@@ -275,10 +288,9 @@
                             <constraint firstItem="EDS-bk-kY3" firstAttribute="trailing" secondItem="TeK-yb-FkS" secondAttribute="trailing" constant="129" id="Pmg-Ao-hPd"/>
                             <constraint firstItem="sk4-ph-pfs" firstAttribute="top" secondItem="ffb-YV-dV1" secondAttribute="bottom" constant="54" id="Qok-Ro-Ooq"/>
                             <constraint firstItem="TeK-yb-FkS" firstAttribute="top" secondItem="EDS-bk-kY3" secondAttribute="top" constant="82" id="TfA-jg-hlC"/>
+                            <constraint firstItem="szs-4Z-cuu" firstAttribute="centerX" secondItem="GFf-Tc-X3t" secondAttribute="centerX" id="V3Y-h1-4An"/>
                             <constraint firstItem="oWK-6O-9le" firstAttribute="top" secondItem="cCU-So-8og" secondAttribute="bottom" constant="59" id="WMq-Q2-IN1"/>
-                            <constraint firstItem="szs-4Z-cuu" firstAttribute="leading" secondItem="EDS-bk-kY3" secondAttribute="leading" constant="128" id="X5h-xi-5At"/>
                             <constraint firstItem="cCU-So-8og" firstAttribute="top" secondItem="szs-4Z-cuu" secondAttribute="bottom" constant="66" id="Z54-s7-cKq"/>
-                            <constraint firstItem="EDS-bk-kY3" firstAttribute="trailing" secondItem="szs-4Z-cuu" secondAttribute="trailing" constant="129" id="a2H-CK-WPs"/>
                             <constraint firstItem="ffb-YV-dV1" firstAttribute="top" secondItem="oWK-6O-9le" secondAttribute="bottom" constant="60" id="cl6-eI-Am0"/>
                             <constraint firstItem="oWK-6O-9le" firstAttribute="leading" secondItem="EDS-bk-kY3" secondAttribute="leading" constant="16" id="e0P-NG-ZK3"/>
                             <constraint firstItem="cCU-So-8og" firstAttribute="leading" secondItem="EDS-bk-kY3" secondAttribute="leading" constant="16" id="p4I-1a-aAd"/>
@@ -300,6 +312,7 @@
     </scenes>
     <resources>
         <image name="ic-camera" width="24" height="24"/>
+        <image name="ic-navigate-back" width="32" height="32"/>
         <image name="ic-navigation-chevron-right-medium" width="24" height="24"/>
         <image name="office" width="182" height="268"/>
     </resources>

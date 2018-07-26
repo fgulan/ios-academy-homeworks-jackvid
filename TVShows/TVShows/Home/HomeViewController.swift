@@ -95,7 +95,6 @@ class HomeViewController: UIViewController {
             
                 switch response.result {
                 case .success(let showsData):
-                    print("ndasnhbdhjashjds: \(showsData)")
                     self.shows = showsData
                     self.tableView.reloadData()
                     SVProgressHUD.dismiss()
