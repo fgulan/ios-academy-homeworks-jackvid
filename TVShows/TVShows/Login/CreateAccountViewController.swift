@@ -42,9 +42,12 @@ class CreateAccountViewController: UIViewController {
     @IBOutlet private weak var passwordLabel: UILabel!
     
     private var user : User?
-    //MARK - System -
+    
+    //MARK: - Delegate -
     
     weak var delegate: LoginDelegate?
+    
+    //MARK: - System -
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -56,11 +59,6 @@ class CreateAccountViewController: UIViewController {
         passwordLabel.isHidden = true
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-    }
-    
-    
     // MARK: - Navigation
 
     @IBAction func didSelectCancel(_ sender: Any) {
@@ -68,26 +66,30 @@ class CreateAccountViewController: UIViewController {
     }
 
     @IBAction func createButtonClicked(_ sender: Any) {
-        
-        guard !(emailTextField.text?.isEmpty)! || !(passwordTextField.text?.isEmpty)! else {
+
+        guard let email = emailTextField.text, !email.isEmpty else {
             emailLabel.isHidden = false
-            emailLabel.text = "Set valid email adress"
-            passwordLabel.isHidden = false
-            passwordLabel.text = "Set valid password"
-            return
-        }
-        
-        guard !(emailTextField.text?.isEmpty)! else {
-            emailLabel.isHidden = false
-            emailLabel.text = "Set valid email adress"
+            emailLabel.text = "Set valid email"
+            guard let password = passwordTextField.text, !password.isEmpty else {
+                passwordLabel.isHidden = false
+                passwordLabel.text = "Set valid password"
+                return
+            }
+            passwordLabel.isHidden = true
             return
         }
         
         emailLabel.isHidden = true
         
-        guard !(passwordTextField.text?.isEmpty)! else {
+        guard let password = passwordTextField.text, !password.isEmpty else {
             passwordLabel.isHidden = false
             passwordLabel.text = "Set valid password"
+            guard let email = emailTextField.text, !email.isEmpty else {
+                emailLabel.isHidden = false
+                emailLabel.text = "Set valid email"
+                return
+            }
+            emailLabel.isHidden = true
             return
         }
         
@@ -117,7 +119,7 @@ class CreateAccountViewController: UIViewController {
                     SVProgressHUD.setStatus("Success")
                     print("Success: \(user)")
                     SVProgressHUD.dismiss(withDelay: 1)
-                    self.delegate?.didCreateAccount(username: self.emailTextField.text!, password: self.passwordTextField.text!)
+                    self.delegate?.didCreateAccount(username: email, password: password)
                     self.dismiss(animated: true, completion: nil)
                         
                 case .failure(let error):
