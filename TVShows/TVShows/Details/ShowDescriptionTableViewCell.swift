@@ -1,32 +1,25 @@
-//
-//  ShowDescriptionTableViewCell.swift
-//  TVShows
-//
-//  Created by Infinum Student Academy on 24/07/2018.
-//  Copyright © 2018 Jakov Vidak. All rights reserved.
-//
-
 import UIKit
 
-struct ShowDescriptionItem {
-    
-}
 
 class ShowDescriptionTableViewCell: UITableViewCell {
     
+    //MARK: - Private -
     
     @IBOutlet private weak var showName: UILabel!
-    
     @IBOutlet private weak var showDescription: UITextView!
-    
     @IBOutlet private weak var numberOfEpisodes: UILabel!
-    
     @IBOutlet private weak var imageOfShow: UIImageView!
+    @IBOutlet private weak var backButtonOutlet: UIButton!
     
+    //MARK: - Public -
+    
+    public var parentViewController: ShowDetailsViewController?
+    
+    //MARK: - System -
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        backButtonOutlet.layer.cornerRadius = 50
     }
     
     override func prepareForReuse() {
@@ -45,7 +38,14 @@ class ShowDescriptionTableViewCell: UITableViewCell {
         showName.text = show.title
         showDescription.text = show.description
         numberOfEpisodes.text = "\(number)"
-        //imageOfShow.image = CGImage(named: "office")
     }
 
+    @IBAction func backButtonPressed(_ sender: Any) {
+        guard let parentViewController = parentViewController else {
+            print("PROBLEMS WITH paretnViewController in descriptionTableViewCell")
+            return
+        }
+        
+        parentViewController.dismissViewController()
+    }
 }

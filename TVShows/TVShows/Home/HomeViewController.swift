@@ -38,8 +38,7 @@ class HomeViewController: UIViewController {
     //MARK: - System -
 
     override func viewDidLoad() {
-        //navigationController?.setViewControllers([self], animated: false)
-        self.navigationItem.setHidesBackButton(true, animated:true); //koristim ovo za skrivanje back gumba
+        self.navigationItem.setHidesBackButton(true, animated:true);
         super.viewDidLoad()
         self.title = "Shows"
         apiCall()
@@ -96,16 +95,13 @@ class HomeViewController: UIViewController {
             
                 switch response.result {
                 case .success(let showsData):
-                    //print("\(showsData)")
                     self.shows = showsData
                     self.tableView.reloadData()
                     SVProgressHUD.dismiss()
-                    print("GOTOV JE API CALL")
                     
                 case .failure(let error):
                     SVProgressHUD.dismiss()
                     print("Failure: \(error)")
-                    //print("API \(error)")
                 }
         }
     }
@@ -133,13 +129,10 @@ extension HomeViewController: UITableViewDelegate {
 extension HomeViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        //print("++++++++++++++ COUNT OD SHOWS \(shows.count)")
         return shows.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        //print("SHOWS: \(shows)")
         
         let cell = tableView.dequeueReusableCell(
             withIdentifier: "TVShowsTableViewCell",
@@ -158,11 +151,8 @@ extension HomeViewController: UITableViewDataSource {
         let showDetailsViewController = storyboard.instantiateViewController(
             withIdentifier: "ShowDetailsViewController") as! ShowDetailsViewController
         
-        
         showDetailsViewController.showId = shows[indexPath.row].id
         showDetailsViewController.token = token
-        
-        /*print("ID: \(String(describing: showDetailsViewController.showId)) TOKEN: \(String(describing: showDetailsViewController.token))")*/
         
         self.navigationController?.pushViewController(showDetailsViewController, animated: true)
         

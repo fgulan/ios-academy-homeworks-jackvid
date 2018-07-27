@@ -133,6 +133,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="aRc-na-qRd"/>
                     <connections>
+                        <outlet property="appIcon" destination="UHd-xQ-HcO" id="R8u-EQ-8LF"/>
                         <outlet property="emailTextField" destination="PZI-uy-s7Q" id="F8E-xU-Gl4"/>
                         <outlet property="logInButton" destination="43m-KK-zc2" id="WrF-AW-hDT"/>
                         <outlet property="passwordTextField" destination="Lgw-nB-0YT" id="gr9-pj-XYh"/>
