@@ -31,17 +31,7 @@ class AddNewEpisodeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.title = "Add episode"
-        
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancle",
-                                                            style: .plain,
-                                                            target: self,
-                                                            action: #selector(cancleSelected))
-        
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Add",
-                                                            style: .plain,
-                                                            target: self,
-                                                            action: #selector(addShowSelected))
+        initScreen()
         
         episodeTitleTextField.setBottomBorder()
         seasonNumberTextField.setBottomBorder()
@@ -51,6 +41,20 @@ class AddNewEpisodeViewController: UIViewController {
     }
 
     // MARK: - Navigation
+    
+    private func initScreen() {
+        self.title = "Add episode"
+        
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancle",
+                                                           style: .plain,
+                                                           target: self,
+                                                           action: #selector(cancleSelected))
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Add",
+                                                            style: .plain,
+                                                            target: self,
+                                                            action: #selector(addShowSelected))
+    }
     
     @objc private func cancleSelected() {
         dismiss(animated: true, completion: nil)

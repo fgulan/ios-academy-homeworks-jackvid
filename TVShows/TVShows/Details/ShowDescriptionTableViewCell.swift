@@ -19,7 +19,6 @@ class ShowDescriptionTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        backButtonOutlet.layer.cornerRadius = 50
     }
     
     override func prepareForReuse() {
@@ -38,14 +37,5 @@ class ShowDescriptionTableViewCell: UITableViewCell {
         showName.text = show.title
         showDescription.text = show.description
         numberOfEpisodes.text = "\(number)"
-    }
-
-    @IBAction func backButtonPressed(_ sender: Any) {
-        guard let parentViewController = parentViewController else {
-            print("PROBLEMS WITH paretnViewController in descriptionTableViewCell")
-            return
-        }
-        
-        parentViewController.dismissViewController()
     }
 }

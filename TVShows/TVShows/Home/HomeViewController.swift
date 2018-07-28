@@ -38,8 +38,8 @@ class HomeViewController: UIViewController {
     //MARK: - System -
 
     override func viewDidLoad() {
-        self.navigationItem.setHidesBackButton(true, animated:true);
         super.viewDidLoad()
+        self.navigationItem.setHidesBackButton(true, animated:true);
         self.title = "Shows"
         apiCall()
         
