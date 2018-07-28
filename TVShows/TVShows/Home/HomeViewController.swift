@@ -138,7 +138,7 @@ extension HomeViewController: UITableViewDataSource {
             withIdentifier: "TVShowsTableViewCell",
             for: indexPath) as! TVShowsTableViewCell
         
-        let item = TVShowsItem(title: "\(shows[indexPath.row].title)")
+        let item = TVShowsItem(title: "\(shows[indexPath.row].title)", imageUrl: "\(shows[indexPath.row].imageUrl)")
         
         cell.configure(with: item)
         

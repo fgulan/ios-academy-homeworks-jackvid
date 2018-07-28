@@ -7,9 +7,11 @@
 //
 
 import UIKit
+import Kingfisher
 
 struct TVShowsItem {
     let title: String
+    let imageUrl: String
 }
 
 class TVShowsTableViewCell: UITableViewCell {
@@ -17,6 +19,8 @@ class TVShowsTableViewCell: UITableViewCell {
     //MARK: - Private -
 
     @IBOutlet private weak var titleShowLabel: UILabel!
+    
+    @IBOutlet private weak var imageShow: UIImageView!
     
     //MARK: - System -
     override func awakeFromNib() {
@@ -32,6 +36,8 @@ class TVShowsTableViewCell: UITableViewCell {
     
     func configure(with item: TVShowsItem) {
         titleShowLabel.text = item.title
+        let url = URL(string: "https//api.infinum.academy" + item.imageUrl)
+        imageShow.kf.setImage(with: url)
     }
 
 }

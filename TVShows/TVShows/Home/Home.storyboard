@@ -23,27 +23,36 @@
                                 <rect key="frame" x="0.0" y="20" width="375" height="647"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="TVShowsTableViewCell" rowHeight="57" id="i61-9i-nk4" customClass="TVShowsTableViewCell" customModule="TVShows" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="375" height="57"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="TVShowsTableViewCell" rowHeight="150" id="i61-9i-nk4" customClass="TVShowsTableViewCell" customModule="TVShows" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="150"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="i61-9i-nk4" id="bug-BD-kWr">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="56.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="149.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wut-Fi-Uxb">
-                                                    <rect key="frame" x="162" y="15.5" width="52.5" height="26.5"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="43k-R0-DG7">
+                                                    <rect key="frame" x="8" y="11" width="119" height="128"/>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JDk-iq-Noj">
+                                                    <rect key="frame" x="187" y="11" width="48" height="24"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="Wut-Fi-Uxb" firstAttribute="centerY" secondItem="bug-BD-kWr" secondAttribute="centerY" id="SRh-uz-Mk2"/>
-                                                <constraint firstItem="Wut-Fi-Uxb" firstAttribute="centerX" secondItem="bug-BD-kWr" secondAttribute="centerX" id="lfs-dd-EIK"/>
+                                                <constraint firstItem="JDk-iq-Noj" firstAttribute="top" secondItem="bug-BD-kWr" secondAttribute="topMargin" id="G46-pl-5fT"/>
+                                                <constraint firstAttribute="bottom" secondItem="43k-R0-DG7" secondAttribute="bottom" constant="11" id="Sou-2c-GQR"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="JDk-iq-Noj" secondAttribute="trailing" constant="125" id="aYm-WG-AR3"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="JDk-iq-Noj" secondAttribute="bottom" constant="104" id="dSz-tZ-hOW"/>
+                                                <constraint firstItem="JDk-iq-Noj" firstAttribute="leading" secondItem="43k-R0-DG7" secondAttribute="trailing" constant="60" id="hoZ-YK-LQA"/>
+                                                <constraint firstItem="43k-R0-DG7" firstAttribute="leading" secondItem="bug-BD-kWr" secondAttribute="leading" constant="8" id="io1-Kn-AWf"/>
+                                                <constraint firstItem="43k-R0-DG7" firstAttribute="top" secondItem="bug-BD-kWr" secondAttribute="top" constant="11" id="lTq-XH-OYg"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <outlet property="titleShowLabel" destination="Wut-Fi-Uxb" id="Hbd-Tp-Rfi"/>
+                                            <outlet property="imageShow" destination="43k-R0-DG7" id="irI-KR-ibg"/>
+                                            <outlet property="titleShowLabel" destination="JDk-iq-Noj" id="d4S-Iz-1Dm"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
