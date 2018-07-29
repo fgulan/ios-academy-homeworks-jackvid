@@ -54,6 +54,8 @@ class AddNewEpisodeViewController: UIViewController {
                                                             style: .plain,
                                                             target: self,
                                                             action: #selector(addShowSelected))
+        
+        
     }
     
     @objc private func cancleSelected() {

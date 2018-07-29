@@ -88,6 +88,7 @@ class LoginViewController: UIViewController {
                 case .success(let loginData):
                     self.loginData = loginData
                     SVProgressHUD.setStatus("Success")
+        
                     let storyboard = UIStoryboard(name: "Home", bundle: nil)
                     let homeViewController = storyboard.instantiateViewController(withIdentifier: "HomeViewController") as! HomeViewController
                     

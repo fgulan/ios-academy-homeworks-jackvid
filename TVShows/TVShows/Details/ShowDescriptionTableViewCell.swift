@@ -8,8 +8,7 @@ class ShowDescriptionTableViewCell: UITableViewCell {
     @IBOutlet private weak var showName: UILabel!
     @IBOutlet private weak var showDescription: UITextView!
     @IBOutlet private weak var numberOfEpisodes: UILabel!
-    @IBOutlet private weak var imageOfShow: UIImageView!
-    @IBOutlet private weak var backButtonOutlet: UIButton!
+    @IBOutlet public weak var imageOfShow: UIImageView!
     
     //MARK: - Public -
     

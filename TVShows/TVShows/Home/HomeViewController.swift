@@ -40,12 +40,32 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.setHidesBackButton(true, animated:true);
+        
+        setUpOfLogoutButton()
+        
         self.title = "Shows"
         apiCall()
         
     }    
 
     // MARK: - Navigation
+    
+    
+    private func setUpOfLogoutButton() {
+        let logoutItem = UIBarButtonItem.init(image: UIImage(named: "ic-logout"),
+                                              style: .plain,
+                                              target: self,
+                                              action: #selector(logoutActionHandler))
+        navigationItem.leftBarButtonItem = logoutItem
+        
+    }
+    
+    @objc private func logoutActionHandler() {
+        let storyboard = UIStoryboard(name: "Login", bundle: nil)
+        let homeViewController = storyboard.instantiateViewController(withIdentifier: "LoginViewController") as! LoginViewController
+        
+        self.navigationController?.setViewControllers([homeViewController], animated: true)
+    }
     
     private func apiCall() {
         
@@ -138,10 +158,13 @@ extension HomeViewController: UITableViewDataSource {
             withIdentifier: "TVShowsTableViewCell",
             for: indexPath) as! TVShowsTableViewCell
         
-        let item = TVShowsItem(title: "\(shows[indexPath.row].title)", imageUrl: "\(shows[indexPath.row].imageUrl)")
+        let item = TVShowsItem(title: "\(shows[indexPath.row].title)")
+        
+        let url = URL(string: "https://api.infinum.academy" + shows[indexPath.row].imageUrl)
+        
+        cell.imageShow.kf.setImage(with: url)
         
         cell.configure(with: item)
-        
         return cell
     }
     

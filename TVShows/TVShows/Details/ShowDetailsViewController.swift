@@ -161,11 +161,6 @@ class ShowDetailsViewController: UIViewController {
                 }
         }
     }
-    
-   /* public func dismissViewController() {
-        _ = navigationController?.popViewController(animated: true)
-    }*/
-    
 }
 
 //MARK: - Extensions -
@@ -197,6 +192,16 @@ extension ShowDetailsViewController: UITableViewDataSource {
             let cell = tableView.dequeueReusableCell(
                 withIdentifier: "ShowDescriptionTableViewCell",
                 for: indexPath) as! ShowDescriptionTableViewCell
+            
+            guard let showDescription = showDescription else {
+                print("Problem with show description")
+                return cell
+            }
+            
+            let url = URL(string: "https://api.infinum.academy" + showDescription.imageUrl)
+            
+            cell.imageOfShow.kf.setImage(with: url)
+            
             cell.parentViewController = self
             cell.configure(with: showDescription, numberOfEpisodes: episodes!.count)
             return cell
