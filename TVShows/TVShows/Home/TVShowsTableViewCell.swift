@@ -9,17 +9,17 @@
 import UIKit
 import Kingfisher
 
-struct TVShowsItem {
+/*struct TVShowsItem {
     let title: String
     //let imageUrl: String
-}
+}*/
 
 class TVShowsTableViewCell: UITableViewCell {
     
     //MARK: - Private -
 
     @IBOutlet private weak var titleShowLabel: UILabel!
-    @IBOutlet public weak var imageShow: UIImageView!
+    @IBOutlet weak var imageShow: UIImageView!
     
     //MARK: - System -
     override func awakeFromNib() {

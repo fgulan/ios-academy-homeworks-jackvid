@@ -20,7 +20,7 @@ struct Show: Codable {
     }
 }
 
-class HomeViewController: UIViewController {
+class HomeViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
     
     //MARK: - Private -
     
@@ -28,14 +28,10 @@ class HomeViewController: UIViewController {
     private var shows: [Show] = []
     public var email: String?
     
+    //private var gridLayout: GridLayout?
     
-   @IBOutlet private weak var tableView: UITableView! {
-        didSet {
-            tableView.dataSource = self
-            tableView.delegate = self
-            tableView.tableFooterView = UIView()
-        }
-    }
+    
+    @IBOutlet private weak var collectionView: UICollectionView!
     
     //MARK: - System -
     
@@ -46,6 +42,10 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.setHidesBackButton(true, animated:true);
+        
+        //gridLayout = GridLayout(numberOfColumns: 1)
+        
+        //collectionView.collectionViewLayout = gridLayout!
         
         setUpOfLogoutButton()
         
@@ -133,7 +133,7 @@ class HomeViewController: UIViewController {
                 switch response.result {
                 case .success(let showsData):
                     self.shows = showsData
-                    self.tableView.reloadData()
+                    self.collectionView.reloadData()
                     SVProgressHUD.dismiss()
                     
                 case .failure(let error):
@@ -142,38 +142,15 @@ class HomeViewController: UIViewController {
                 }
         }
     }
-
-}
-
-//MARK: - Extensions -
-
-extension HomeViewController: UITableViewDelegate {
-    
-    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
-        
-        let delete = UITableViewRowAction(style: .destructive, title: "Delete") { (action, indexPath) in
-            self.shows.remove(at: indexPath.row)
-            tableView.deleteRows(at: [indexPath], with: .fade)
-            print(self.shows)
-        }
-        
-        return [delete]
-    }
     
     
-}
-
-extension HomeViewController: UITableViewDataSource {
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return shows.count
     }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        let cell = tableView.dequeueReusableCell(
-            withIdentifier: "TVShowsTableViewCell",
-            for: indexPath) as! TVShowsTableViewCell
+
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(
+            withReuseIdentifier: "TVShowsCollectionViewCell", for: indexPath) as! TVShowsCollectionViewCell
         
         let item = TVShowsItem(title: "\(shows[indexPath.row].title)")
         
@@ -182,10 +159,11 @@ extension HomeViewController: UITableViewDataSource {
         cell.imageShow.kf.setImage(with: url)
         
         cell.configure(with: item)
+        
         return cell
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         let storyboard = UIStoryboard(name: "Home", bundle: nil)
         let showDetailsViewController = storyboard.instantiateViewController(
@@ -197,5 +175,6 @@ extension HomeViewController: UITableViewDataSource {
         self.navigationController?.pushViewController(showDetailsViewController, animated: true)
         
     }
-
+    
 }
+
