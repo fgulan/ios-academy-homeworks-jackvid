@@ -28,8 +28,6 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
     private var shows: [Show] = []
     public var email: String?
     
-    //private var gridLayout: GridLayout?
-    
     
     @IBOutlet private weak var collectionView: UICollectionView!
     
