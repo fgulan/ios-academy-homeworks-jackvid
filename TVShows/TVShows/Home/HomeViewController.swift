@@ -38,6 +38,10 @@ class HomeViewController: UIViewController {
     }
     
     //MARK: - System -
+    
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.setNavigationBarHidden(false, animated: true)
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,6 +50,7 @@ class HomeViewController: UIViewController {
         setUpOfLogoutButton()
         
         self.title = "Shows"
+        
         apiCall()
         
     }    
@@ -54,13 +59,16 @@ class HomeViewController: UIViewController {
     
     
     private func setUpOfLogoutButton() {
+    
         let logoutItem = UIBarButtonItem.init(image: UIImage(named: "ic-logout"),
                                               style: .plain,
                                               target: self,
                                               action: #selector(logoutActionHandler))
+        
+        logoutItem.tintColor = UIColor.uicolorFromHex(rgbValue: 0x000000)
+        
         navigationItem.leftBarButtonItem = logoutItem
-        
-        
+
     }
     
     @objc private func logoutActionHandler() {

@@ -37,7 +37,7 @@ class AddNewEpisodeViewController: UIViewController {
         seasonNumberTextField.setBottomBorder()
         episodeNumberTextField.setBottomBorder()
         descriptionTextField.setBottomBorder()
-    
+        
     }
 
     // MARK: - Navigation

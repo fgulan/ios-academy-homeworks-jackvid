@@ -17,11 +17,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         SVProgressHUD.setDefaultMaskType(.black)
-        
+
         let navigationBarAppearace = UINavigationBar.appearance()
         navigationBarAppearace.tintColor = UIColor.uicolorFromHex(rgbValue: 0xFF758C)
         navigationBarAppearace.barTintColor = UIColor.uicolorFromHex(rgbValue: 0xffffff)
-
+        
         return true
     }
     
