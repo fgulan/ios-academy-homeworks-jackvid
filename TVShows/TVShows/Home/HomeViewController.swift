@@ -4,6 +4,7 @@ import SVProgressHUD
 import Alamofire
 import CodableAlamofire
 import PromiseKit
+import KeychainAccess
 
 struct Show: Codable {
     let id: String
@@ -25,6 +26,7 @@ class HomeViewController: UIViewController {
     
     public var token: String?
     private var shows: [Show] = []
+    public var email: String?
     
     
    @IBOutlet private weak var tableView: UITableView! {
@@ -40,6 +42,8 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.setHidesBackButton(true, animated:true);
+        
+        print(keychain.allKeys().count)
         
         setUpOfLogoutButton()
         
@@ -58,11 +62,18 @@ class HomeViewController: UIViewController {
                                               action: #selector(logoutActionHandler))
         navigationItem.leftBarButtonItem = logoutItem
         
+        
     }
     
     @objc private func logoutActionHandler() {
         let storyboard = UIStoryboard(name: "Login", bundle: nil)
         let homeViewController = storyboard.instantiateViewController(withIdentifier: "LoginViewController") as! LoginViewController
+        
+        guard let email = email else {
+            return
+        }
+        
+        keychain["\(email)"] = nil
         
         self.navigationController?.setViewControllers([homeViewController], animated: true)
     }

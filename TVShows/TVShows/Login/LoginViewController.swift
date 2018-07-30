@@ -3,12 +3,15 @@ import SVProgressHUD
 import Alamofire
 import CodableAlamofire
 import PromiseKit
+import KeychainAccess
 
 //MARK: - Structs -
 
 struct LoginData: Codable {
     let token: String
 }
+
+public let keychain : Keychain = Keychain(service: "TVShows")
 
 class LoginViewController: UIViewController {
     
@@ -25,6 +28,7 @@ class LoginViewController: UIViewController {
     
     private var loginData : LoginData?
     
+    
     //MARK: - System -
     
     override func viewDidLoad() {
@@ -33,6 +37,18 @@ class LoginViewController: UIViewController {
         logInButton.titleLabel?.textAlignment = NSTextAlignment.center
         emailTextField.setBottomBorder()
         passwordTextField.setBottomBorder()
+        
+        print(keychain.allKeys().count)
+        
+        if keychain.allKeys().count != 0 {
+            for key in keychain.allKeys() {
+                emailTextField.text = key
+                passwordTextField.text = keychain["\(key)"]
+            }
+            
+            _login(user: emailTextField.text!, password: passwordTextField.text!)
+            
+        }
         
         emailTextField.text = "jakov.vidak@gmail.com"
         passwordTextField.text = "infinum1"
@@ -52,6 +68,23 @@ class LoginViewController: UIViewController {
     }
     
     @IBAction private func logInClick(_ sender: Any) {
+        
+        if !boolean {
+    
+            guard let emailText = emailTextField.text else {
+                print("Problem to convert emailTextField to emailText")
+                return
+            }
+            
+            guard let password = passwordTextField.text else {
+                print("Problem to convert passwordTextField to passwordText")
+                return
+            }
+
+            keychain["\(emailText)"] = password
+            
+        }
+        
         _login(user: emailTextField.text!, password: passwordTextField.text!)
     }
     
@@ -93,6 +126,7 @@ class LoginViewController: UIViewController {
                     let homeViewController = storyboard.instantiateViewController(withIdentifier: "HomeViewController") as! HomeViewController
                     
                     homeViewController.token = loginData.token
+                    homeViewController.email = self.emailTextField.text
                     self.navigationController?.pushViewController(homeViewController, animated: true)
                 
                 case .failure(let error):
