@@ -68,9 +68,11 @@ class CreateAccountViewController: UIViewController {
     @IBAction func createButtonClicked(_ sender: Any) {
 
         guard let email = emailTextField.text, !email.isEmpty else {
+            emailTextField.shake(horizantaly: 3, Verticaly: 3)
             emailLabel.isHidden = false
             emailLabel.text = "Set valid email"
             guard let password = passwordTextField.text, !password.isEmpty else {
+                passwordTextField.shake(horizantaly: 3, Verticaly: 3)
                 passwordLabel.isHidden = false
                 passwordLabel.text = "Set valid password"
                 return
@@ -82,9 +84,11 @@ class CreateAccountViewController: UIViewController {
         emailLabel.isHidden = true
         
         guard let password = passwordTextField.text, !password.isEmpty else {
+            passwordTextField.shake(horizantaly: 3, Verticaly: 3)
             passwordLabel.isHidden = false
             passwordLabel.text = "Set valid password"
             guard let email = emailTextField.text, !email.isEmpty else {
+                emailTextField.shake(horizantaly: 3, Verticaly: 3)
                 emailLabel.isHidden = false
                 emailLabel.text = "Set valid email"
                 return

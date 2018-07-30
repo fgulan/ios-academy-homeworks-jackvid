@@ -17,11 +17,10 @@ class LoginViewController: UIViewController {
     
     //MARK: - Private -
 
-    @IBOutlet weak var rememberMeButton: UIButton!
+    @IBOutlet private weak var rememberMeButton: UIButton!
     @IBOutlet private weak var emailTextField: UITextField!
     @IBOutlet private weak var logInButton: UIButton!
     @IBOutlet private weak var passwordTextField: UITextField!
-    
     @IBOutlet weak var appIcon: UIImageView!
     
     private var boolean = true
@@ -37,8 +36,6 @@ class LoginViewController: UIViewController {
         logInButton.titleLabel?.textAlignment = NSTextAlignment.center
         emailTextField.setBottomBorder()
         passwordTextField.setBottomBorder()
-        
-        print(keychain.allKeys().count)
         
         if keychain.allKeys().count != 0 {
             for key in keychain.allKeys() {
@@ -132,14 +129,9 @@ class LoginViewController: UIViewController {
                 case .failure(let error):
                     SVProgressHUD.dismiss()
                     print("API \(error)")
-                    let alertController = UIAlertController(title: "Error", message: "You insert wrong password or email", preferredStyle: .alert)
-                    
-                    self.present(alertController, animated: true, completion: nil)
-                    
-                    let action = UIAlertAction(title: "Cancel", style: .cancel) { [weak self] (action:UIAlertAction) in
-                        self?.dismiss(animated: true, completion: nil)
-                    }
-                    alertController.addAction(action)
+                    self.emailTextField.shake(horizantaly: 3, Verticaly: 3)
+                    self.passwordTextField.shake(horizantaly: 3, Verticaly: 3)
+                    self.logInButton.pulsating()
                 }
         }
     }

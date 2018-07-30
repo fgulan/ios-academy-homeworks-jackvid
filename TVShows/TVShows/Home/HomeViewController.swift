@@ -43,8 +43,6 @@ class HomeViewController: UIViewController {
         super.viewDidLoad()
         self.navigationItem.setHidesBackButton(true, animated:true);
         
-        print(keychain.allKeys().count)
-        
         setUpOfLogoutButton()
         
         self.title = "Shows"
