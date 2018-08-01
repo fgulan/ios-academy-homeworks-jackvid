@@ -215,4 +215,19 @@ extension ShowDetailsViewController: UITableViewDataSource {
             return cell
         }
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.row != 0 {
+                
+            let storyboard = UIStoryboard(name: "Home", bundle: nil)
+            let episodeDetailsViewController = storyboard.instantiateViewController(
+                    withIdentifier: "EpisodeDetailsViewController") as! EpisodeDetailsViewController
+            
+            episodeDetailsViewController.token = token
+            episodeDetailsViewController.episodeId = episodes![indexPath.row].id
+                
+            self.navigationController?.pushViewController(episodeDetailsViewController, animated: true)
+                
+        }
+    }
 }

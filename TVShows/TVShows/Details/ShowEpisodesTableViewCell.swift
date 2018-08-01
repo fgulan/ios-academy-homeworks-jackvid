@@ -5,6 +5,7 @@ class ShowEpisodesTableViewCell: UITableViewCell {
     @IBOutlet private weak var seasonAndEpisodeNumber: UILabel!
     @IBOutlet private weak var episodeName: UILabel!
     
+    
     override func awakeFromNib() {
         super.awakeFromNib()
     }
@@ -19,5 +20,6 @@ class ShowEpisodesTableViewCell: UITableViewCell {
         seasonAndEpisodeNumber.text = "S2 Ep\(number)"
         episodeName.text = item.title
     }
+    
 
 }
