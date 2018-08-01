@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-extension UITextField {
+public extension UITextField {
     
     func setBottomBorder() {
         layer.shadowColor = UIColor.lightGray.cgColor
@@ -18,4 +18,35 @@ extension UITextField {
         layer.shadowRadius = 0.0
     }
     
+    func shake(horizantaly:CGFloat = 0  , Verticaly:CGFloat = 0) {
+        let animation = CABasicAnimation(keyPath: "position")
+        animation.duration = 0.05
+        animation.repeatCount = 5
+        animation.autoreverses = true
+        animation.fromValue = NSValue(cgPoint: CGPoint(x: self.center.x - horizantaly, y: self.center.y - Verticaly ))
+        animation.toValue = NSValue(cgPoint: CGPoint(x: self.center.x + horizantaly, y: self.center.y + Verticaly ))
+        
+        
+        self.layer.add(animation, forKey: "position")
+        
+    }
+    
 }
+
+public extension UIButton {
+    
+    func pulsating() {
+        
+        let pulseAnimation:CABasicAnimation = CABasicAnimation(keyPath: "transform.scale")
+        pulseAnimation.duration = 1.0
+        pulseAnimation.fromValue = 0.5
+        pulseAnimation.toValue = 1.0
+        pulseAnimation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+        pulseAnimation.autoreverses = true
+        pulseAnimation.repeatCount = 1
+        
+        self.layer.add(pulseAnimation, forKey: nil)
+        
+    }
+}
+

@@ -31,26 +31,32 @@ class AddNewEpisodeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        initScreen()
+        
+        episodeTitleTextField.setBottomBorder()
+        seasonNumberTextField.setBottomBorder()
+        episodeNumberTextField.setBottomBorder()
+        descriptionTextField.setBottomBorder()
+        
+    }
+
+    // MARK: - Navigation
+    
+    private func initScreen() {
         self.title = "Add episode"
         
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancle",
-                                                            style: .plain,
-                                                            target: self,
-                                                            action: #selector(cancleSelected))
+                                                           style: .plain,
+                                                           target: self,
+                                                           action: #selector(cancleSelected))
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Add",
                                                             style: .plain,
                                                             target: self,
                                                             action: #selector(addShowSelected))
         
-        episodeTitleTextField.setBottomBorder()
-        seasonNumberTextField.setBottomBorder()
-        episodeNumberTextField.setBottomBorder()
-        descriptionTextField.setBottomBorder()
-    
+        
     }
-
-    // MARK: - Navigation
     
     @objc private func cancleSelected() {
         dismiss(animated: true, completion: nil)

@@ -54,9 +54,9 @@ class ShowDetailsViewController: UIViewController {
     
     private var showDescription : ShowDescription?
     private var episodes: [Episodes]?
-    private var button = UIButton()
     
-
+    @IBOutlet weak var backButton: UIButton!
+    
     //MARK: - Public -
     
     public var token: String?
@@ -67,6 +67,8 @@ class ShowDetailsViewController: UIViewController {
         
         tableView.separatorStyle = .none
         
+        backButton.layer.cornerRadius = 50
+        
         guard let token = token else {
             print("ERROR converting token in ShowDetailsViewController")
             return
@@ -76,15 +78,8 @@ class ShowDetailsViewController: UIViewController {
             print("ERROR converting showId in ShowDetailsViewController")
             return
         }
-        
-        button = UIButton(type: .custom)
-        //self.button.setTitleColor(UIColor.orange, for: .normal)
-        //self.button.addTarget(self, action: #selector(ButtonClick(_:)), for: UIControlEvents.touchUpInside)
-        self.view.addSubview(button)
-        
+       
         self.navigationController?.setNavigationBarHidden(true, animated: true)
-        
-        button.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
         
         SVProgressHUD.show()
         
@@ -93,22 +88,7 @@ class ShowDetailsViewController: UIViewController {
     
     // MARK: - Navigation
     
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-        
-        button.layer.cornerRadius = button.layer.frame.size.width/2
-        button.clipsToBounds = true
-        button.setImage(UIImage(named:"ic-fab-button"), for: .normal)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            button.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: 0),
-            button.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 0),
-            button.widthAnchor.constraint(equalToConstant: 75),
-            button.heightAnchor.constraint(equalToConstant: 75)])
-    }
-    
-    @objc func buttonAction(sender: UIButton!) {
-        
+    @IBAction func addNewEpisodesClicked(_ sender: Any) {
         let storyboard = UIStoryboard(name: "Home", bundle: nil)
         let addEpisodeViewController = storyboard.instantiateViewController(
             withIdentifier: "AddNewEpisodeViewController") as! AddNewEpisodeViewController
@@ -117,9 +97,14 @@ class ShowDetailsViewController: UIViewController {
         addEpisodeViewController.showId = showId
         addEpisodeViewController.delegate = self
         
-        let navigationController = UINavigationController.init(rootViewController: addEpisodeViewController)
+        let navigationController = UINavigationController(rootViewController: addEpisodeViewController)
         
         present(navigationController, animated: true, completion: nil)
+    }
+    
+    
+    @IBAction func backButtonClicked(_ sender: Any) {
+        _ = navigationController?.popViewController(animated: true)
     }
     
     
@@ -176,11 +161,6 @@ class ShowDetailsViewController: UIViewController {
                 }
         }
     }
-    
-    public func dismissViewController() {
-        _ = navigationController?.popViewController(animated: true)
-    }
-    
 }
 
 //MARK: - Extensions -
@@ -212,6 +192,16 @@ extension ShowDetailsViewController: UITableViewDataSource {
             let cell = tableView.dequeueReusableCell(
                 withIdentifier: "ShowDescriptionTableViewCell",
                 for: indexPath) as! ShowDescriptionTableViewCell
+            
+            guard let showDescription = showDescription else {
+                print("Problem with show description")
+                return cell
+            }
+            
+            let url = URL(string: "https://api.infinum.academy" + showDescription.imageUrl)
+            
+            cell.imageOfShow.kf.setImage(with: url)
+            
             cell.parentViewController = self
             cell.configure(with: showDescription, numberOfEpisodes: episodes!.count)
             return cell
