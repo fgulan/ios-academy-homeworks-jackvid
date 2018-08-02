@@ -96,7 +96,7 @@ class CommentsViewController: UIViewController {
     @objc private func keyboardWillShow(notification: NSNotification) {
         if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
             postBottomConstraint.constant = keyboardSize.height
-            tableView.contentInset.bottom = keyboardSize.height + 61
+            tableView.contentInset.bottom = keyboardSize.height
             UIView.animate(withDuration: 0.3) {
                 self.view.layoutIfNeeded()
             }
