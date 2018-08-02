@@ -19,14 +19,6 @@ struct Comment: Codable {
     }
 }
 
-/*"text": "ovo je neki komentar",
-"episodeId": "0wznMEc5j3EkW52V",
-"userId": "XkzqNXR814uMHXrf",
-"userEmail": "m@m",
-"type": "comments",
-"_id": "A4HwGYA6AA8CMuva"*/
-
-
 struct CommentPost: Codable {
     let text: String
     let episodeId: String
@@ -61,9 +53,8 @@ class CommentsViewController: UIViewController {
     }
     private var comments: [Comment] = []
     private var commentPost: CommentPost?
-    
     @IBOutlet private  weak var commentTextField: UITextField!
-    
+    private var refresh: UIRefreshControl?
     
     //MARK: - Public -
     
@@ -80,12 +71,21 @@ class CommentsViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        initRefresh()
         keyboardNotifications()
-    
         initScreen()
-        
         apiCallForComments()
+    }
+    
+    //MARK: - Navigator -
+    
+    private func initRefresh() {
+        refresh = UIRefreshControl()
+        guard let refresh = refresh else {
+            return
+        }
+        refresh.addTarget(self, action: #selector(apiCallForComments), for: UIControlEvents.valueChanged)
+        tableView.addSubview(refresh)
     }
     
     private func keyboardNotifications() {
@@ -132,6 +132,10 @@ class CommentsViewController: UIViewController {
     
     @IBAction func postCommentAction(_ sender: Any) {
         
+        if commentTextField.text?.count == 0 {
+            return
+        }
+        
         guard let token = token else {
             return
         }
@@ -165,8 +169,8 @@ class CommentsViewController: UIViewController {
                 
                 switch response.result {
                 case .success(let commentPost):
-                    print("\(commentPost)")
                     self.commentPost = commentPost
+                    self.commentTextField.text = ""
                     SVProgressHUD.dismiss()
                     
                 case .failure(let error):
@@ -178,9 +182,7 @@ class CommentsViewController: UIViewController {
         
     }
     
-    
-    
-    private func apiCallForComments() {
+    @objc private func apiCallForComments() {
         
         guard let token = token else {
             return
@@ -205,9 +207,10 @@ class CommentsViewController: UIViewController {
                 
                 switch response.result {
                 case .success(let comments):
-                    print("\(comments)")
                     self.comments = comments
+                    self.refresh?.endRefreshing()
                     self.tableView.reloadData()
+                    
                 case .failure(let error):
                     SVProgressHUD.dismiss()
                     print("Failure: \(error)")
