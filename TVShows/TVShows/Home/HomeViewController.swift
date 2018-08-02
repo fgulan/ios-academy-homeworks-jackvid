@@ -41,11 +41,6 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.setHidesBackButton(true, animated:true);
-        
-        //gridLayout = GridLayout(numberOfColumns: 1)
-        
-        //collectionView.collectionViewLayout = gridLayout!
-        
         setUpOfLogoutButton()
         
         self.title = "Shows"

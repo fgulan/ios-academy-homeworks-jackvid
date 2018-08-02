@@ -40,11 +40,9 @@ class EpisodeDetailsViewController: UIViewController {
     @IBOutlet private weak var seasonAndEpisodeNumber: UILabel!
     @IBOutlet private weak var episodeDescription: UITextView!
     
-    
     //MARK: - Public -
     public var token: String?
     public var episodeId: String?
-    
     
     //MARK: - System -
     override func viewWillAppear(_ animated: Bool) {
@@ -56,7 +54,6 @@ class EpisodeDetailsViewController: UIViewController {
         super.viewDidLoad()
         apiCall()
     }
-    
     
     func apiCall() {
         guard let token = token else {
@@ -91,7 +88,6 @@ class EpisodeDetailsViewController: UIViewController {
                 }
         }
     }
-    
     
     func setGui() {
         guard let imageUrl = episodeDetails?.imageUrl else {

@@ -1,16 +1,7 @@
-//
-//  CreateAccountViewController.swift
-//  TVShows
-//
-//  Created by Infinum Student Academy on 18/07/2018.
-//  Copyright © 2018 Jakov Vidak. All rights reserved.
-//
-
 import UIKit
 import Alamofire
 import CodableAlamofire
 import SVProgressHUD
-
 
 struct User: Codable {
     let email: String

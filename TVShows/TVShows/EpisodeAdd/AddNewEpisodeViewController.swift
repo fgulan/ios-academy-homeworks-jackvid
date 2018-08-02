@@ -51,9 +51,7 @@ class AddNewEpisodeViewController: UIViewController, UINavigationControllerDeleg
         super.viewDidLoad()
         
         imagePicker.delegate = self
-        
         initScreen()
-        
         episodeTitleTextField.setBottomBorder()
         seasonNumberTextField.setBottomBorder()
         episodeNumberTextField.setBottomBorder()
@@ -75,8 +73,6 @@ class AddNewEpisodeViewController: UIViewController, UINavigationControllerDeleg
                                                             style: .plain,
                                                             target: self,
                                                             action: #selector(addShowSelected))
-        
-        
     }
     
     @objc private func cancleSelected() {
@@ -170,7 +166,6 @@ class AddNewEpisodeViewController: UIViewController, UINavigationControllerDeleg
             return
         }
         
-        
         uploadImageOnAPI(token: token)
         
         let headers = ["Authorization": token]
@@ -183,8 +178,6 @@ class AddNewEpisodeViewController: UIViewController, UINavigationControllerDeleg
             "episodeNumber": episodeNumber,
             "season": season
         ]
-        
-        
         
         Alamofire
             .request("https://api.infinum.academy/api/episodes",
@@ -221,8 +214,6 @@ class AddNewEpisodeViewController: UIViewController, UINavigationControllerDeleg
         }
     }
     
-
-
     @IBAction private func uploadPhotoAction(_ sender: Any) {
         imagePicker.allowsEditing = false
         imagePicker.sourceType = .photoLibrary
