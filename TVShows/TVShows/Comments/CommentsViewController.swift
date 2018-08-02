@@ -4,6 +4,7 @@ import Alamofire
 import CodableAlamofire
 import PromiseKit
 
+
 struct Comment: Codable {
     let episodeId: String
     let text: String
@@ -18,10 +19,37 @@ struct Comment: Codable {
     }
 }
 
+/*"text": "ovo je neki komentar",
+"episodeId": "0wznMEc5j3EkW52V",
+"userId": "XkzqNXR814uMHXrf",
+"userEmail": "m@m",
+"type": "comments",
+"_id": "A4HwGYA6AA8CMuva"*/
+
+
+struct CommentPost: Codable {
+    let text: String
+    let episodeId: String
+    let userId: String
+    let userEmail: String
+    let type: String
+    let id: String
+    
+    enum CodingKeys: String, CodingKey {
+        case text
+        case episodeId
+        case userId
+        case userEmail
+        case type
+        case id = "_id"
+    }
+}
+
 class CommentsViewController: UIViewController {
     
     //MARK: - Private -
     
+    @IBOutlet weak var postBottomConstraint: NSLayoutConstraint!
     
     @IBOutlet weak var tableView: UITableView! {
         didSet {
@@ -32,6 +60,10 @@ class CommentsViewController: UIViewController {
         }
     }
     private var comments: [Comment] = []
+    private var commentPost: CommentPost?
+    
+    @IBOutlet private  weak var commentTextField: UITextField!
+    
     
     //MARK: - Public -
     
@@ -42,26 +74,53 @@ class CommentsViewController: UIViewController {
     //MARK: - System -
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
         navigationController?.setNavigationBarHidden(false, animated: true)
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        keyboardNotifications()
+    
         initScreen()
         
         apiCallForComments()
     }
     
+    private func keyboardNotifications() {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+    }
+    
+    @objc private func keyboardWillShow(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+            postBottomConstraint.constant = keyboardSize.height
+            tableView.contentInset.bottom = keyboardSize.height + 61
+            UIView.animate(withDuration: 0.3) {
+                self.view.layoutIfNeeded()
+            }
+        }
+    }
+    
+    @objc func keyboardWillHide(notification: NSNotification) {
+        postBottomConstraint.constant = 0
+        tableView.contentInset = .zero
+        UIView.animate(withDuration: 0.3) {
+            self.view.layoutIfNeeded()
+        }
+    }
+ 
+    
     private func initScreen() {
         self.title = "Comments"
         
-        let logoutItem = UIBarButtonItem.init(image: UIImage(named: "back"),
+        let logoutItem = UIBarButtonItem.init(image: UIImage(named: "ic-back"),
                                                   style: .plain,
                                                   target: self,
                                                   action: #selector(backSelected))
         
-        logoutItem.tintColor = UIColor.uicolorFromHex(rgbValue: 0xFFFFFF)
+        logoutItem.tintColor = UIColor.uicolorFromHex(rgbValue: 0x000000)
         
         navigationItem.leftBarButtonItem = logoutItem
     }
@@ -69,6 +128,56 @@ class CommentsViewController: UIViewController {
     @objc func backSelected() {
         _ = navigationController?.popViewController(animated: true)
     }
+    
+    
+    @IBAction func postCommentAction(_ sender: Any) {
+        
+        guard let token = token else {
+            return
+        }
+        
+        guard let comment = commentTextField.text else {
+            return
+        }
+        guard let episodeId = episodeId else {
+            return
+        }
+        
+        let parameters: [String: String] = [
+            "text": comment,
+            "episodeId": episodeId
+        ]
+        
+        let headers = ["Authorization": token]
+        
+        SVProgressHUD.show()
+        
+        Alamofire
+            .request("https://api.infinum.academy/api/comments",
+                     method: .post,
+                     parameters: parameters,
+                     encoding: JSONEncoding.default,
+                     headers: headers)
+            .validate()
+            .responseDecodableObject(keyPath: "data", decoder: JSONDecoder()) { [weak self] (response: DataResponse<CommentPost>) in
+                
+                guard let `self` = self else { return }
+                
+                switch response.result {
+                case .success(let commentPost):
+                    print("\(commentPost)")
+                    self.commentPost = commentPost
+                    SVProgressHUD.dismiss()
+                    
+                case .failure(let error):
+                    SVProgressHUD.dismiss()
+                    print("API \(error)")
+    
+                }
+        }
+        
+    }
+    
     
     
     private func apiCallForComments() {

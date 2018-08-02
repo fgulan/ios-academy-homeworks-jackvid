@@ -34,6 +34,7 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
     //MARK: - System -
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
         navigationController?.setNavigationBarHidden(false, animated: true)
     }
 

@@ -61,6 +61,11 @@ class ShowDetailsViewController: UIViewController {
     
     public var token: String?
     public var showId: String?
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(false)
+        navigationController?.setNavigationBarHidden(true, animated: true)
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -218,13 +223,15 @@ extension ShowDetailsViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.row != 0 {
+            let index = indexPath.row - 1
+
                 
             let storyboard = UIStoryboard(name: "Home", bundle: nil)
             let episodeDetailsViewController = storyboard.instantiateViewController(
                     withIdentifier: "EpisodeDetailsViewController") as! EpisodeDetailsViewController
             
             episodeDetailsViewController.token = token
-            episodeDetailsViewController.episodeId = episodes![indexPath.row].id
+            episodeDetailsViewController.episodeId = episodes![index].id
                 
             self.navigationController?.pushViewController(episodeDetailsViewController, animated: true)
                 

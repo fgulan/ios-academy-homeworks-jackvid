@@ -4,6 +4,7 @@ import SVProgressHUD
 import Alamofire
 import CodableAlamofire
 import PromiseKit
+import KeychainAccess
 
 struct EpisodeDetails: Codable {
     let showId: String
@@ -46,6 +47,11 @@ class EpisodeDetailsViewController: UIViewController {
     
     
     //MARK: - System -
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(false)
+        navigationController?.setNavigationBarHidden(true, animated: true)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         apiCall()
@@ -88,6 +94,15 @@ class EpisodeDetailsViewController: UIViewController {
     
     
     func setGui() {
+        guard let imageUrl = episodeDetails?.imageUrl else {
+            print("Problems with image url")
+            return
+        }
+        
+        let url = URL(string: "https://api.infinum.academy" + imageUrl)
+        
+        episodeImage.kf.setImage(with: url)
+        
         episodeName.text = episodeDetails?.title
         episodeDescription.text = episodeDetails?.description
         guard let season = episodeDetails?.season else {
@@ -112,21 +127,7 @@ class EpisodeDetailsViewController: UIViewController {
         commentsViewController.token = token
         commentsViewController.episodeId = episodeDetails?.id
         
-        //let navigationController = UINavigationController(rootViewController: commentsViewController)
-        
         self.navigationController?.pushViewController(commentsViewController, animated: true)
     }
-    
-    
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
