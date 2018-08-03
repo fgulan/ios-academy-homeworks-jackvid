@@ -30,6 +30,11 @@ class LoginViewController: UIViewController {
     
     //MARK: - System -
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(false)
+        navigationController?.setNavigationBarHidden(true, animated: true)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         logInButton.layer.cornerRadius = 5

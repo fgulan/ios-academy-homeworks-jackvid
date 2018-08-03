@@ -1,11 +1,3 @@
-//
-//  TVShowsCollectionViewCell.swift
-//  TVShows
-//
-//  Created by Infinum Student Academy on 30/07/2018.
-//  Copyright © 2018 Jakov Vidak. All rights reserved.
-//
-
 import UIKit
 
 struct TVShowsItem {

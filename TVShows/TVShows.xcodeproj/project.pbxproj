@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		5C0E14C4210F39320078D775 /* TVShowsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C0E14C3210F39320078D775 /* TVShowsCollectionViewCell.swift */; };
+		5C0E14CB2111A9BA0078D775 /* EpisodeDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C0E14CA2111A9BA0078D775 /* EpisodeDetailsViewController.swift */; };
+		5C0E14CE2111C6DC0078D775 /* CommentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C0E14CD2111C6DC0078D775 /* CommentsViewController.swift */; };
+		5C0E14D02111CB490078D775 /* CommentsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C0E14CF2111CB490078D775 /* CommentsTableViewCell.swift */; };
 		5C125DA82105E919002BE8D4 /* TVShowsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C125DA72105E919002BE8D4 /* TVShowsTableViewCell.swift */; };
 		5C75A70E20EE6F2900393B04 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C75A70D20EE6F2900393B04 /* AppDelegate.swift */; };
 		5C75A71520EE6F2C00393B04 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5C75A71420EE6F2C00393B04 /* Assets.xcassets */; };
@@ -29,6 +32,9 @@
 		011356EFB458379FC86A7E62 /* Pods-TVShows.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TVShows.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TVShows/Pods-TVShows.debug.xcconfig"; sourceTree = "<group>"; };
 		48F4930C3C33A5BE4B1F0FE7 /* Pods-TVShows.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TVShows.release.xcconfig"; path = "Pods/Target Support Files/Pods-TVShows/Pods-TVShows.release.xcconfig"; sourceTree = "<group>"; };
 		5C0E14C3210F39320078D775 /* TVShowsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVShowsCollectionViewCell.swift; sourceTree = "<group>"; };
+		5C0E14CA2111A9BA0078D775 /* EpisodeDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodeDetailsViewController.swift; sourceTree = "<group>"; };
+		5C0E14CD2111C6DC0078D775 /* CommentsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentsViewController.swift; sourceTree = "<group>"; };
+		5C0E14CF2111CB490078D775 /* CommentsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentsTableViewCell.swift; sourceTree = "<group>"; };
 		5C125DA72105E919002BE8D4 /* TVShowsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVShowsTableViewCell.swift; sourceTree = "<group>"; };
 		5C75A70A20EE6F2900393B04 /* TVShows.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TVShows.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5C75A70D20EE6F2900393B04 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -60,6 +66,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5C0E14C92111A98D0078D775 /* Episode Details */ = {
+			isa = PBXGroup;
+			children = (
+				5C0E14CA2111A9BA0078D775 /* EpisodeDetailsViewController.swift */,
+			);
+			path = "Episode Details";
+			sourceTree = "<group>";
+		};
+		5C0E14CC2111C6B90078D775 /* Comments */ = {
+			isa = PBXGroup;
+			children = (
+				5C0E14CD2111C6DC0078D775 /* CommentsViewController.swift */,
+				5C0E14CF2111CB490078D775 /* CommentsTableViewCell.swift */,
+			);
+			path = Comments;
+			sourceTree = "<group>";
+		};
 		5C75A70120EE6F2900393B04 = {
 			isa = PBXGroup;
 			children = (
@@ -81,6 +104,8 @@
 		5C75A70C20EE6F2900393B04 /* TVShows */ = {
 			isa = PBXGroup;
 			children = (
+				5C0E14CC2111C6B90078D775 /* Comments */,
+				5C0E14C92111A98D0078D775 /* Episode Details */,
 				5CA777552108C21B00147E12 /* EpisodeAdd */,
 				5CA7774E2107592100147E12 /* Details */,
 				5C76B0DD20FF1FFD000748F6 /* Home */,
@@ -274,6 +299,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5C76B0E320FF3662000748F6 /* CreateAccountViewController.swift in Sources */,
+				5C0E14CE2111C6DC0078D775 /* CommentsViewController.swift in Sources */,
 				5CA7775221076E6300147E12 /* ShowDescriptionTableViewCell.swift in Sources */,
 				5CFDDC3C20F6337000320CC9 /* LoginViewController.swift in Sources */,
 				5CA777542107708A00147E12 /* ShowEpisodesTableViewCell.swift in Sources */,
@@ -283,7 +309,9 @@
 				5C0E14C4210F39320078D775 /* TVShowsCollectionViewCell.swift in Sources */,
 				5C75A70E20EE6F2900393B04 /* AppDelegate.swift in Sources */,
 				5CA777502107596200147E12 /* ShowDetailsViewController.swift in Sources */,
+				5C0E14D02111CB490078D775 /* CommentsTableViewCell.swift in Sources */,
 				5C76B0DF20FF2024000748F6 /* HomeViewController.swift in Sources */,
+				5C0E14CB2111A9BA0078D775 /* EpisodeDetailsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
