@@ -16,10 +16,6 @@ class ShowDescriptionTableViewCell: UITableViewCell {
     
     //MARK: - System -
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
-    }
-    
     override func prepareForReuse() {
         super.prepareForReuse()
         showName.text = nil

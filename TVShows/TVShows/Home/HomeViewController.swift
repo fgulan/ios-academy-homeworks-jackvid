@@ -32,11 +32,6 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
     @IBOutlet private weak var collectionView: UICollectionView!
     
     //MARK: - System -
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
-        navigationController?.setNavigationBarHidden(false, animated: true)
-    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,18 +41,21 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
         self.title = "Shows"
         
         apiCall()
-        
-    }    
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        navigationController?.setNavigationBarHidden(false, animated: animated)
+    }
 
     // MARK: - Navigation
     
     
     private func setUpOfLogoutButton() {
-    
-        let logoutItem = UIBarButtonItem.init(image: UIImage(named: "ic-logout"),
-                                              style: .plain,
-                                              target: self,
-                                              action: #selector(logoutActionHandler))
+        let logoutItem = UIBarButtonItem(image: UIImage(named: "ic-logout"),
+                                         style: .plain,
+                                         target: self,
+                                         action: #selector(logoutActionHandler))
         
         logoutItem.tintColor = UIColor.uicolorFromHex(rgbValue: 0x000000)
         
@@ -75,7 +73,7 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
         
         keychain["\(email)"] = nil
         
-        self.navigationController?.setViewControllers([homeViewController], animated: true)
+        navigationController?.setViewControllers([homeViewController], animated: true)
     }
     
     private func apiCall() {
@@ -144,7 +142,8 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(
-            withReuseIdentifier: "TVShowsCollectionViewCell", for: indexPath) as! TVShowsCollectionViewCell
+            withReuseIdentifier: "TVShowsCollectionViewCell",
+            for: indexPath) as! TVShowsCollectionViewCell
         
         let item = TVShowsItem(title: "\(shows[indexPath.row].title)")
         
@@ -166,7 +165,7 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
         showDetailsViewController.showId = shows[indexPath.row].id
         showDetailsViewController.token = token
         
-        self.navigationController?.pushViewController(showDetailsViewController, animated: true)
+        navigationController?.pushViewController(showDetailsViewController, animated: true)
         
     }
     

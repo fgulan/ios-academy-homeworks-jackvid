@@ -48,6 +48,7 @@ class ShowDetailsViewController: UIViewController {
             tableView.delegate = self
             tableView.tableFooterView = UIView()
             tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 75, right: 0)
+            tableView.separatorStyle = .none
         }
     }
     
@@ -69,8 +70,6 @@ class ShowDetailsViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        tableView.separatorStyle = .none
         
         backButton.layer.cornerRadius = 50
         
@@ -225,7 +224,6 @@ extension ShowDetailsViewController: UITableViewDataSource {
         if indexPath.row != 0 {
             let index = indexPath.row - 1
 
-                
             let storyboard = UIStoryboard(name: "Home", bundle: nil)
             let episodeDetailsViewController = storyboard.instantiateViewController(
                     withIdentifier: "EpisodeDetailsViewController") as! EpisodeDetailsViewController
@@ -236,5 +234,9 @@ extension ShowDetailsViewController: UITableViewDataSource {
             self.navigationController?.pushViewController(episodeDetailsViewController, animated: true)
                 
         }
+    }
+    
+    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
     }
 }

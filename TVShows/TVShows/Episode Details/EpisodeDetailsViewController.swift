@@ -45,25 +45,27 @@ class EpisodeDetailsViewController: UIViewController {
     public var episodeId: String?
     
     //MARK: - System -
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(false)
-        navigationController?.setNavigationBarHidden(true, animated: true)
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         apiCall()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(false)
+        navigationController?.setNavigationBarHidden(true, animated: animated)
+    }
+    
+    //MARK: - Navigator -
+    
     func apiCall() {
-        guard let token = token else {
-            return
-        }
         
-        guard let episodeId = episodeId else {
-            return
+        guard
+            let token = token,
+            let episodeId = episodeId
+        else {
+                return
         }
-        
+       
         let headers = ["Authorization": token]
         
         Alamofire
@@ -79,7 +81,7 @@ class EpisodeDetailsViewController: UIViewController {
                 
                 switch response.result {
                 case .success(let episodeDetails):
-                    print("\(episodeDetails)")
+                    //print("\(episodeDetails)")
                     self.episodeDetails = episodeDetails
                     self.setGui()
                 case .failure(let error):
@@ -101,12 +103,13 @@ class EpisodeDetailsViewController: UIViewController {
         
         episodeName.text = episodeDetails?.title
         episodeDescription.text = episodeDetails?.description
-        guard let season = episodeDetails?.season else {
+        guard
+            let season = episodeDetails?.season,
+            let episode = episodeDetails?.episodeNumber
+        else {
             return
         }
-        guard let episode = episodeDetails?.episodeNumber else {
-            return
-        }
+
         seasonAndEpisodeNumber.text = "S\(season) Ep\(episode)"
         SVProgressHUD.dismiss()
     }
@@ -123,7 +126,7 @@ class EpisodeDetailsViewController: UIViewController {
         commentsViewController.token = token
         commentsViewController.episodeId = episodeDetails?.id
         
-        self.navigationController?.pushViewController(commentsViewController, animated: true)
+        navigationController?.pushViewController(commentsViewController, animated: true)
     }
 
 }

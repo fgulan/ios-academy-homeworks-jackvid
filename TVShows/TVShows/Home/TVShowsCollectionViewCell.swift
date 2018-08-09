@@ -10,7 +10,6 @@ class TVShowsCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet private weak var titleShowLabel: UILabel!
     
-    
     override func prepareForReuse() {
         super.prepareForReuse()
         titleShowLabel.text = nil

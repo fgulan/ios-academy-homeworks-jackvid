@@ -136,6 +136,7 @@
                         <outlet property="appIcon" destination="UHd-xQ-HcO" id="R8u-EQ-8LF"/>
                         <outlet property="emailTextField" destination="PZI-uy-s7Q" id="F8E-xU-Gl4"/>
                         <outlet property="logInButton" destination="43m-KK-zc2" id="WrF-AW-hDT"/>
+                        <outlet property="loginScreenBottomConstraint" destination="efh-Ty-cwQ" id="Fna-FP-10g"/>
                         <outlet property="passwordTextField" destination="Lgw-nB-0YT" id="gr9-pj-XYh"/>
                         <outlet property="rememberMeButton" destination="atS-0P-Ihm" id="rgq-Di-9FB"/>
                     </connections>

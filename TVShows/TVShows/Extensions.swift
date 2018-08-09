@@ -35,18 +35,17 @@ public extension UITextField {
 
 public extension UIButton {
     
+    
+    
     func pulsating() {
-        
-        let pulseAnimation:CABasicAnimation = CABasicAnimation(keyPath: "transform.scale")
-        pulseAnimation.duration = 1.0
+        let pulseAnimation = CABasicAnimation(keyPath: #keyPath(CALayer.opacity))
+        pulseAnimation.duration = 1
         pulseAnimation.fromValue = 0.5
-        pulseAnimation.toValue = 1.0
+        pulseAnimation.toValue = 1
         pulseAnimation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
         pulseAnimation.autoreverses = true
         pulseAnimation.repeatCount = 1
-        
-        self.layer.add(pulseAnimation, forKey: nil)
-        
+        self.layer.add(pulseAnimation, forKey: "animateOpacity")
     }
 }
 

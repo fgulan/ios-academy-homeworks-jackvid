@@ -22,19 +22,16 @@ class LoginViewController: UIViewController {
     @IBOutlet private weak var logInButton: UIButton!
     @IBOutlet private weak var passwordTextField: UITextField!
     @IBOutlet weak var appIcon: UIImageView!
+    @IBOutlet weak var loginScreenBottomConstraint: NSLayoutConstraint!
     
     private var boolean = true
+    
+    private var orientation = false
     
     private var loginData : LoginData?
     
     
     //MARK: - System -
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(false)
-        navigationController?.setNavigationBarHidden(true, animated: true)
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         logInButton.layer.cornerRadius = 5
@@ -42,14 +39,14 @@ class LoginViewController: UIViewController {
         emailTextField.setBottomBorder()
         passwordTextField.setBottomBorder()
         
+        keyboardNotifications()
+        
         if keychain.allKeys().count != 0 {
             for key in keychain.allKeys() {
                 emailTextField.text = key
                 passwordTextField.text = keychain["\(key)"]
             }
-            
             _login(user: emailTextField.text!, password: passwordTextField.text!)
-            
         }
         
         emailTextField.text = "jakov.vidak@gmail.com"
@@ -57,8 +54,56 @@ class LoginViewController: UIViewController {
         
     }
     
-  
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(false)
+        navigationController?.setNavigationBarHidden(true, animated: true)
+    }
+    
     //MARK: - Navigation -
+    
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        if UIDevice.current.orientation.isLandscape {
+                orientation = true
+            } else {
+                orientation = false
+        }
+    }
+    
+    private func keyboardNotifications() {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+    }
+    
+    @objc private func keyboardShow(notification: NSNotification) {
+        if orientation {
+            if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+                if self.view.frame.origin.y == 0{
+                    self.view.frame.origin.y -= keyboardSize.height
+                }
+            }
+        } else {
+            if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+                loginScreenBottomConstraint.constant = keyboardSize.height
+                UIView.animate(withDuration: 0.3) {
+                    self.view.layoutIfNeeded()
+                }
+            }
+        }
+    }
+    
+    @objc func keyboardHide(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+            if self.view.frame.origin.y != 0{
+                self.view.frame.origin.y += keyboardSize.height
+            }
+        } else {
+            loginScreenBottomConstraint.constant = 0
+            UIView.animate(withDuration: 0.3) {
+                self.view.layoutIfNeeded()
+            }
+        }
+    }
     
     @IBAction private func rememberMeClick(_ sender: Any) {
         if boolean {

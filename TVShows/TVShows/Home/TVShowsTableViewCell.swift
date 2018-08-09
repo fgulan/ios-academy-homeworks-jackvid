@@ -8,11 +8,6 @@ class TVShowsTableViewCell: UITableViewCell {
     @IBOutlet private weak var titleShowLabel: UILabel!
     @IBOutlet weak var imageShow: UIImageView!
     
-    //MARK: - System -
-    override func awakeFromNib() {
-        super.awakeFromNib()
-    }
-    
     //MARK: - Navigation -
     
     override func prepareForReuse() {

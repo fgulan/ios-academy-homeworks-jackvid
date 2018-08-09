@@ -55,6 +55,8 @@ class CommentsViewController: UIViewController {
     private var commentPost: CommentPost?
     @IBOutlet private  weak var commentTextField: UITextField!
     private var refresh: UIRefreshControl?
+    @IBOutlet weak var noCommentsLabel: UILabel!
+    @IBOutlet weak var noCommentsView: UIView!
     
     //MARK: - Public -
     
@@ -64,17 +66,17 @@ class CommentsViewController: UIViewController {
     
     //MARK: - System -
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
-        navigationController?.setNavigationBarHidden(false, animated: true)
-    }
-
     override func viewDidLoad() {
         super.viewDidLoad()
         initRefresh()
         keyboardNotifications()
         initScreen()
         apiCallForComments()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        navigationController?.setNavigationBarHidden(false, animated: true)
     }
     
     //MARK: - Navigator -
@@ -84,13 +86,22 @@ class CommentsViewController: UIViewController {
         guard let refresh = refresh else {
             return
         }
-        refresh.addTarget(self, action: #selector(apiCallForComments), for: UIControlEvents.valueChanged)
+        refresh.addTarget(self,
+                          action: #selector(apiCallForComments),
+                          for: .valueChanged)
         tableView.addSubview(refresh)
     }
     
     private func keyboardNotifications() {
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(keyboardWillShow),
+                                               name: NSNotification.Name.UIKeyboardWillShow,
+                                               object: nil)
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(keyboardWillHide),
+                                               name: NSNotification.Name.UIKeyboardWillHide,
+                                               object: nil)
     }
     
     @objc private func keyboardWillShow(notification: NSNotification) {
@@ -113,8 +124,8 @@ class CommentsViewController: UIViewController {
  
     
     private func initScreen() {
-        self.title = "Comments"
-        
+        title = "Comments"
+
         let logoutItem = UIBarButtonItem.init(image: UIImage(named: "ic-back"),
                                                   style: .plain,
                                                   target: self,
@@ -136,15 +147,12 @@ class CommentsViewController: UIViewController {
             return
         }
         
-        guard let token = token else {
-            return
-        }
-        
-        guard let comment = commentTextField.text else {
-            return
-        }
-        guard let episodeId = episodeId else {
-            return
+        guard
+            let token = token,
+            let comment = commentTextField.text,
+            let episodeId = episodeId
+        else {
+                return
         }
         
         let parameters: [String: String] = [
@@ -184,14 +192,13 @@ class CommentsViewController: UIViewController {
     
     @objc private func apiCallForComments() {
         
-        guard let token = token else {
-            return
+        guard
+            let token = token,
+            let episodeId = episodeId
+        else {
+                return
         }
-        
-        guard let episodeId = episodeId else {
-            return
-        }
-        
+    
         let headers = ["Authorization": token]
         
         Alamofire
@@ -222,8 +229,28 @@ class CommentsViewController: UIViewController {
 extension CommentsViewController: UITableViewDelegate {
     
 }
+//
+//
 
 extension CommentsViewController: UITableViewDataSource {
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        var numOfSections: Int
+        if comments.count == 0 {
+            noCommentsLabel.numberOfLines = 2
+            noCommentsLabel.text = "Sorry, we don't have comments yet.\nBe first who will write a review"
+            noCommentsLabel.textAlignment = .center
+            noCommentsView.isHidden = false
+            numOfSections = 0
+            
+        } else {
+            noCommentsView.isHidden = true
+            numOfSections = 1
+            tableView.backgroundView = nil
+        }
+        
+        return numOfSections
+    }
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

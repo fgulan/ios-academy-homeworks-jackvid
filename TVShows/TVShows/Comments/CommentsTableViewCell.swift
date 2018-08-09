@@ -13,10 +13,6 @@ class CommentsTableViewCell: UITableViewCell {
     @IBOutlet weak var userName: UILabel!
     @IBOutlet weak var commentText: UITextView!
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
-    }
-
     override func prepareForReuse() {
         super.prepareForReuse()
         imageOfUser.image = nil
